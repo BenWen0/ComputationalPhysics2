@@ -1,0 +1,13 @@
+Hallo Jonas,
+
+wir haben inzwischen das Erstellen von den verschiedenen Gitterformen weitestgehend fertig gestellt. Eine Frage haben wir allerdings noch:
+
+Aus dem Wiki-Artikel zum hexagonalen Gitter wird uns nicht ganz klar, ob im Zentrum jedes Hexagons ein weiterer Punkt/Node liegt oder nicht. Im Anhang findest du zwei Bilder, eines ohne einen Punkt in der Mitte des Hexagons (ohne.png) und eines mit einem Punkt in der Mitte (mit.png), von dem dann wieder neue Hexagons ausgehen. Kannst du uns sagen, welches Bild korrekt ist bzw. welches der beiden das GNN letztlich klassifizieren können soll? Oder sollen vielleicht sogar beide Arten klassifiziert werden?
+
+Nachdem wir die Gitter nun generieren können (auch mit Rauschen auf den einzelnen Gitterpunkten) wäre unser nächster Schritt, das GNN zu basteln. Hier auch noch eine Frage: welche Werte/Features dürfen die Nodes und die Kanten haben. Wenn wir den Nodes einfach die Winkel als Features und den Kanten ihre Länge zuweisen, dann wäre die Aufgabe ja ziemlich schnell gelöst, da bräuchte es nach unserem Verständnis kein GNN mehr. Was würdest du den Nodes und Kanten als Features zuweisen, damit die Aufgabe nicht ganz so einfach wird?
+
+Beste Grüße,
+
+Stephen, Benedikt
+
+
