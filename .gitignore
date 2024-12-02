@@ -1,4 +1,3 @@
-*.pdf
 *.png
 *.code-workspace
 *.aux
@@ -8,5 +7,6 @@
 *.gz
 email_jonas
 email_jonas_2
+AdvancedMachineLearningSlides.pdf
 GenData/Data2d/
 GenData/Data3d/
