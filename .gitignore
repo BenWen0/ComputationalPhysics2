@@ -1,6 +1,11 @@
 *.pdf
 *.png
 *.code-workspace
+*.aux
+*.fls
+*.fdb_latexmk
+*.log
+*.gz
 email_jonas
 email_jonas_2
 GenData/Data2d/
