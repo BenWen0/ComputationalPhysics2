@@ -1,2 +1,67 @@
-explain a bit what gnns are, how they work (message passing class, message, update, aggregate)
-intro bravias lattice, classification of point sets in 2d, 3d
+This introductory section lays the theoretical foundation of Bravais lattices and GNNs. 
+We start with a short recap of lattice structures in 2d and 3d and then continue with 
+the most fundamental background of Graph-Neural Networks (GNN). 
+Bravais lattice can be found in many textbooks. Subsection~\ref{sec:brav_latt} follows~\cite{symGroupsApplications}.
+Introduction to Graph Neural Networks can be found for example in~\cite{zw} which is also the main reference for section~\ref{sec:fund_gnns}.
+
+\subsection{Bravais lattice}
+\label{sec:brav_latt}
+Let $d\in\N$ and $\{b_i\}_{i=1,\dots,d}\subset \R^d$ a basis of $\R^d$. The set 
+\begin{equation*}
+    \Omega\coloneq\left\{\sum_{i=1}^{d}z_i b_i: z_i\in\Z\,\forall i\in\{1,\dots,d\}\right\}
+\end{equation*}
+is called a $d$-dimensional lattice. Given any subset $S\subset\R^d$ we define its point group $G_S$ to be
+\begin{equation*}
+    G_S\coloneq \left\{M\in O(d) : MS=S\right\}\subset O(d).
+\end{equation*}
+$G_S$ is obviously a subgroup of $O(d)$. We say that two $d$-dimensional lattices $\Omega_1, \Omega_2\subset \R^d$ are of the same Bravais type if
+their exists $g\in GL(n,\Z)$ such that $G_{\Omega_1}=g G_{\Omega_2} g^{-1}$. 
+Being of the same Bravais type introduces and equivalence relation on the set of all $d$-dimensional lattices. We call the equivalences classes Bravais classes.
+A natural question is, how many equivalence Bravais classes there are. Despite being a very interesting and challenging problem,
+we will leave this question to the mathematicians. For us, the result is more important than the actual proof. One obtains the following result:
+For $d=2$ there are 5 Bravais classes and for $d=3$ there are 14 Bravais classes. 
+
+Maybe add a picture
+
+\subsection{Fundamentals of GNNs}
+\label{sec:fund_gnns}
+To talk about graphs, we first have to agree on some notation: Let $V$ be a set and $E\subset V\times V$. The tuple $G=(V,E)$ is called a graph. Furthermore, we call an element $x\in V$ a node and a tuple 
+$(x, y)\in E$ a directed edge from $x$ to $y$. In case $(x,y)\in E$ implies $(y,x)\in E$ we speak of an undirected graph.
+In that case, we call $G$ an undirected graph, and we can think of elements in $E$ as unordered tuples ${x,y}$ instead of ordered ones. We still call ${x,y}$ an edge between $x$ and $y$.
+For working with GNNs we have to assign to each node $x\in V$ a vector $v_x\in\R^n$ called node feature and to each edge $(x, y)\in E$ a vector $e_{x,y}\in\R^m$ called edge feature.
+Roughly, a GNN takes a graph with all its nodes and edge features as an input and manipulates these feature in each step produces. 
+More than that, a GNN can transform the structure of the graph itself, e.g. by introducing new nodes or edges. However, we will not go into detail about this possibility and stick to the more simple case of manipulating node and edge-features.
+\begin{figure}
+\centering
+\begin{tikzpicture}[
+    node_r/.style={circle, draw=red!60, fill=red!5, very thick, minimum size=7mm},
+    node_g/.style={circle, draw=gray!60, fill=gray!5, very thick, minimum size=7mm},
+    node/.style={circle, draw=green!60, fill=green!5, very thick, minimum size=7mm},
+    ]
+    %Nodes
+    \node[node_r] (centernode)                          {$v_c$};
+    \node[node] (top)           [above=of centernode]   {$v_w$};
+    \node[node] (bottom)        [below=of centernode]   {$v_x$};
+    \node[node] (right)         [right=of centernode]   {$v_y$};
+    \node[node] (left)          [left=of centernode]    {$v_z$};
+    \node[node_g] (llt)           [above left=of left]    {};
+    \node[node_g] (llb)           [below left=of left]    {};
+    \node[node_g] (rrt)           [above right=of right]    {};
+    \node[node_g] (rrb)           [below right=of right]    {};
+    
+    %Lines
+    \draw[->, thick]  (top.south) -- node[anchor=west]{$e_{w,c}$} (centernode.north);
+    \draw[->, thick] (left.east) -- node[anchor=south]{$e_{z,c}$} (centernode.west);
+    \draw[->, thick] (right.west) -- node[anchor=north]{$e_{y,c}$} (centernode.east);
+    \draw[->, thick] (right.west) -- node[anchor=north]{$e_{y,c}$} (centernode.east);
+    \draw[->, thick, gray] (left.north west) -- (llt.south east);
+    \draw[->, thick, gray] (left.south west) -- (llb.north east);
+    \draw[->, thick, gray] (right.north east) -- (rrt.south west);
+    \draw[->, thick, gray] (right.south east) -- (rrb.north west);
+    %\draw[->] (rightsquare.south) .. controls +(down:7mm) and +(right:7mm) .. (lowercircle.east);
+\end{tikzpicture}
+\caption{caption}
+\end{figure}
+Lets write this in a bit more formal way: 
+xplain a bit what gnns are, how they work (message passing class, message, update, aggregate)
+differs from an ordinary or undirected graph, in that the latter is defined in terms of unordered pairs of vertices, which are usually called edges, links or lines. 
