@@ -8,10 +8,11 @@
 *.bbl
 *.bcf
 *.blg
-*.run.cml
+*.run.xml
 email_jonas
 email_jonas_2
 AdvancedMachineLearningSlides.pdf
 SymmetryGroupsAndTheirApplications_Miller.pdf
 GenData/Data2d/
 GenData/Data3d/
+IntermediateReport/.vscode/
