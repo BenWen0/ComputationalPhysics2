@@ -5,8 +5,13 @@
 *.fdb_latexmk
 *.log
 *.gz
+*.bbl
+*.bcf
+*.blg
+*.run.cml
 email_jonas
 email_jonas_2
 AdvancedMachineLearningSlides.pdf
+SymmetryGroupsAndTheirApplications_Miller.pdf
 GenData/Data2d/
 GenData/Data3d/
