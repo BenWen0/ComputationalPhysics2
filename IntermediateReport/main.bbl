@@ -19,6 +19,58 @@
 
 \refsection{0}
   \datalist[entry]{nty/global//global/global}
+    \entry{IntroMessagePassing}{misc}{}
+      \name{author}{5}{}{%
+        {{hash=4f550339f0337905aa634f39e1ba4833}{%
+           family={Gilmer},
+           familyi={G\bibinitperiod},
+           given={Justin},
+           giveni={J\bibinitperiod}}}%
+        {{hash=aa3475bbb938eec3f9f0d7c8d44f1e86}{%
+           family={Schoenholz},
+           familyi={S\bibinitperiod},
+           given={Samuel\bibnamedelima S.},
+           giveni={S\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=e9632c2c29a574cd09a5a7503be60435}{%
+           family={Riley},
+           familyi={R\bibinitperiod},
+           given={Patrick\bibnamedelima F.},
+           giveni={P\bibinitperiod\bibinitdelim F\bibinitperiod}}}%
+        {{hash=494b568c5dc85ba8f3f409635f9c5f25}{%
+           family={Vinyals},
+           familyi={V\bibinitperiod},
+           given={Oriol},
+           giveni={O\bibinitperiod}}}%
+        {{hash=b2367e57c17225a47853346440e87b35}{%
+           family={Dahl},
+           familyi={D\bibinitperiod},
+           given={George\bibnamedelima E.},
+           giveni={G\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+      }
+      \strng{namehash}{c654290e16b9e71825428d767650ff2a}
+      \strng{fullhash}{a97dbeb15b563be460fc056e7a076a4b}
+      \strng{bibnamehash}{c654290e16b9e71825428d767650ff2a}
+      \strng{authorbibnamehash}{c654290e16b9e71825428d767650ff2a}
+      \strng{authornamehash}{c654290e16b9e71825428d767650ff2a}
+      \strng{authorfullhash}{a97dbeb15b563be460fc056e7a076a4b}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{cs.LG}
+      \field{eprinttype}{arXiv}
+      \field{title}{Neural Message Passing for Quantum Chemistry}
+      \field{year}{2017}
+      \verb{eprint}
+      \verb 1704.01212
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/1704.01212
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/1704.01212
+      \endverb
+    \endentry
     \entry{symGroupsApplications}{book}{}
       \name{author}{1}{}{%
         {{hash=6269b9bc4351a05b50fca8be8560ad13}{%
@@ -44,7 +96,6 @@
       \field{year}{1972}
     \endentry
   \enddatalist
-  \missing{zw}
 \endrefsection
 \endinput
 
