@@ -1,7 +1,7 @@
 This introductory section lays the theoretical foundation of Bravais lattices and GNNs. 
 We start with a short recap of lattice structures in 2d and 3d and then continue with 
 the most fundamental background of Graph-Neural Networks (GNN). 
-Results on Bravais lattices can be found in many textbooks. Subsection~\ref{sec:brav_latt} follows~\cite{symGroupsApplications}.
+Results on Bravais lattices can be found in many textbooks. Subsection~\ref{sec:brav_latt} follows~\cite{Schwarzenberger} and ~\cite{symGroupsApplications}.
 Introduction to Graph Neural Networks can be found for example in~\cite{IntroMessagePassing} which is also the main reference for section~\ref{sec:fund_gnns}.
 
 \subsection{Bravais lattice}
@@ -15,12 +15,13 @@ is called a $d$-dimensional lattice. Given any subset $S\subset\R^d$, we define 
     G_S\coloneq \left\{M\in O(d) : MS=S\right\}\subset O(d).
 \end{equation*}
 $G_S$ is obviously a subgroup of $O(d)$. We say that two $d$-dimensional lattices $\Omega_1, \Omega_2\subset \R^d$ are of the same Bravais type if
-there exists $g\in GL(n,\Z)$ such that $G_{\Omega_1}=g G_{\Omega_2} g^{-1}$. 
+there exists $g\in GL_n(\R)$ such that $G_{\Omega_1}=g G_{\Omega_2} g^{-1}$ and $\Omega_1=g\Omega_2$. 
 Being of the same Bravais type introduces an equivalence relation on the set of all $d$-dimensional lattices. We refer to the equivalence classes as Bravais classes.
 A natural question arising is about the total number of Bravais classes. Despite being a very interesting and challenging problem,
 we will leave this question to the mathematicians. For us, the result is more important than the actual proof. One obtains the following result:
 For $d=2$ there are 5 Bravais classes and for $d=3$ there are 14 Bravais classes. 
-They can be distinguished by the relative lengths of the basis vectors $b_i$ and the angles between them.
+Roughly speaking, they can be distinguished by the relative lengths of the basis vectors $b_i$ and the angles between them.
+Visualizations and further notes on each Bravais class can be found for example in~\cite{kittel}.
 
 \subsection{Fundamentals of GNNs}
 \label{sec:fund_gnns}
@@ -39,7 +40,7 @@ Roughly, a GNN takes a graph with all its nodes and edge features as an input an
 More than that, a GNN can transform the structure of the graph itself, e.g. by introducing new nodes or edges. 
 However, we will not go into detail about this possibility and stick to the simpler case of manipulating only node and edge-features.
 Furthermore, we restrict ourselves to the case where the GNN does not alter the edge features.
-\begin{SCfigure}[1][h]
+\begin{SCfigure}[1][ht]
 \centering
 \label{fig:gnn}
 \begin{tikzpicture}[
