@@ -1,0 +1,75 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, left=3.17cm, right=3.17cm, top=2.54cm, bottom=2.54cm]{geometry}
+
+\usepackage[english]{babel}
+\usepackage{textcmds}
+
+\usepackage{amsthm} % for the proof-environment
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage[scr=rsfs]{mathalpha}
+
+\usepackage{xifthen}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{sidecap}
+\usepackage{graphicx}
+\usepackage[export]{adjustbox}
+\usepackage{float}
+\usepackage{titlesec}
+\usepackage{tikz}
+\usetikzlibrary{positioning, quotes}
+
+\usepackage{color}
+\usepackage{hyperref} %clickable table of contents
+\hypersetup{
+    colorlinks=false, %set true if you want colored links
+    linktoc=all,     %set to all if you want both sections and subsections linked
+    linkcolor=blue,  %choose some color if you want links to stand out
+}
+
+\usepackage{csquotes}
+\usepackage[backend=biber,style=numeric]{biblatex}
+\addbibresource{references.bib}
+
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+
+\renewcommand{\abstractname}{Abstract}
+\titleformat{\section}
+{\normalfont\large\bfseries}{\thesection}{1em}{}
+
+\title{Structure Recognition with Graph Neural Networks \\[1em] \large Final Report for the Lab-Course Advanced Projects in Computational Physics 2}
+\author{Benedikt Wenzel}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\input{abstract}
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\section{Background}
+\input{Background_Ch1/background}
+
+\section{Goals and Implementation}
+\input{GoalsImplementation/goalsImpl}
+
+\section{Results and Discussion}
+\input{Discussion/discussion}
+
+\section{Conclusion and Outlook}
+\input{outlook}
+
+\printbibliography
+
+\end{document}

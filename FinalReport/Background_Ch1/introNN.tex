@@ -1,0 +1,153 @@
+Let $l\in\N_{\geq2}$, $n_0,n_1\dots,n_l\in\N$ and for each $i\in\N, i\leq l$ 
+choose an affine linear map $T^{(i)}:\R^{n_{i-1}}\to\R^{n_i}$ and a smooth map $a^{(i)}:\R\to\R$.
+Denoting with $f^{(i)}:\R^{n_i}\to\R^{n_i}$ the function acting element wise by $a^{(i)}$ (i.e $f^{(i)}(x_1, \dots, x_{n_i})=(a^{(i)}(x_1),\dots, a^{(i)}(x_{n_i}))$), 
+the composition 
+\begin{equation*} 
+F\coloneq T^{(l)}\circ f^{(l-1)}\circ T^{(l-1)}\circ\dots\circ f^{(2)}\circ T^{(2)}\circ f^{(1)}\circ T^{(1)}:\R^{n_0}\to\R^{n_l}
+\end{equation*}
+is called neural network with $l$ layers and activation function $a^{(i)}$ in layer $i$.
+Recall that for any affine linear map $L:\R^n\to\R^m$ there exist $b\in\R^m$ and $W\in \text{Mat}(n\times m,\R)$ such that 
+$Lx=W^Tx+b$ for all $x\in\R^n$ (the transposition is just for our convenience later on). Hence, to each $T^{(i)}$ corresponds a matrix $W^{(i)}\in\text{Mat}(n_{i-1}\times n_i,\R)$ called the weight-matrix and a vector
+$b^{(i)}\in\R^{n_i}$ called bias such that $T^{(i)}x=\left(W^{(i)}\right)^Tx + b^{(i)}$.
+
+\begin{figure}[h]
+    \centering
+    \label{fig:nn}
+    \begin{tikzpicture}[
+        node distance=0.4cm and 1.5cm,
+        node/.style={circle, draw=gray!60, fill=gray!5, very thick, minimum size=7mm},
+        node_missing/.style={circle, inner sep=0pt, fill=gray, minimum size=2mm},
+        node_invisible/.style={circle, inner sep=0pt, fill=red, minimum size=0mm}
+        ]
+
+        %Nodes input layer
+        \node[node] (1_1) {};
+        \node[node] (1_2) [below=of 1_1] {};
+        \node[node_missing] (m_1_1) [below=of 1_2] {};
+        \node[node_missing] (m_1_2) [below=of m_1_1] {};
+        \node[node_missing] (m_1_3) [below=of m_1_2] {};
+        \node[node] (1_3) [below=of m_1_3] {};
+
+        %Nodes hidden layer 1
+        \node[node] (2_1) [above right=of 1_1] {};
+        \node[node] (2_2) [below=of 2_1] {};
+        \node[node] (2_3) [below=of 2_2] {};
+        \node[node_missing] (m_2_1) [below=of 2_3] {};
+        \node[node_missing] (m_2_2) [below=of m_2_1] {};
+        \node[node_missing] (m_2_3) [below=of m_2_2] {};
+        \node[node] (2_4) [below=of m_2_3] {};
+
+        %Nodes hidden layer 2
+        \node[node] (3_1) [right=of 2_1] {};
+        \node[node] (3_2) [below=of 3_1] {};
+        \node[node] (3_3) [below=of 3_2] {};
+        \node[node_missing] (m_3_1) [below=of 3_3] {};
+        \node[node_missing] (m_3_2) [below=of m_3_1] {};
+        \node[node_missing] (m_3_3) [below=of m_3_2] {};
+        \node[node] (3_4) [below=of m_3_3] {};
+
+        %missing hidden layers
+        \node[node_missing] (m_4_1) [below right=1cm and 1.5cm of 3_1] {};
+        \node[node_missing] (m_4_2) [below=1cm of m_4_1] {};
+        \node[node_missing] (m_4_3) [below=1cm of m_4_2] {};
+        \node[node_missing] (m_5_1) [right=0.3cm of m_4_1] {};
+        \node[node_missing] (m_5_2) [below=1cm of m_5_1] {};
+        \node[node_missing] (m_5_3) [below=1cm of m_5_2] {};
+        \node[node_missing] (m_6_1) [right=0.3cm of m_5_1] {};
+        \node[node_missing] (m_6_2) [below=1cm of m_6_1] {};
+        \node[node_missing] (m_6_3) [below=1cm of m_6_2] {};
+        
+        %Nodes hidden layer 3
+        \node[node] (7_1) [above right=1cm and 1.5cm of m_6_1] {};
+        \node[node] (7_2) [below=of 7_1] {};
+        \node[node] (7_3) [below=of 7_2] {};
+        \node[node_missing] (m_7_1) [below=of 7_3] {};
+        \node[node_missing] (m_7_2) [below=of m_7_1] {};
+        \node[node_missing] (m_7_3) [below=of m_7_2] {};
+        \node[node] (7_4) [below=of m_7_3] {};
+
+        %Nodes output layer
+        \node[node] (8_1) [below right=of 7_1] {};
+        \node[node] (8_2) [below=of 8_1] {};
+        \node[node_missing] (m_8_1) [below=of 8_2] {};
+        \node[node_missing] (m_8_2) [below=of m_8_1] {};
+        \node[node_missing] (m_8_3) [below=of m_8_2] {};
+        \node[node] (8_3) [below=of m_8_3] {};
+
+        %invisible nodes
+        \node[node_invisible] (inv_1_1) [right=0.75cm of 3_1] {};
+        \node[node_invisible] (inv_1_2) [below right=0.2cm and 0.75cm of 3_1] {};
+        \node[node_invisible] (inv_1_3) [above right=0.2cm and 0.75cm of 3_4] {};
+        \node[node_invisible] (inv_1_4) [right=0.75cm of 3_4] {};
+        \node[node_invisible] (inv_1_5) [right=0.75cm of 3_2] {};
+        \node[node_invisible] (inv_1_6) [right=0.75cm of 3_3] {};
+        \node[node_invisible] (inv_2_1) [left=0.75cm of 7_1] {};
+        \node[node_invisible] (inv_2_2) [below left=0.2cm and 0.75cm of 7_1] {};
+        \node[node_invisible] (inv_2_3) [above left=0.2cm and 0.75cm of 7_4] {};
+        \node[node_invisible] (inv_2_4) [left=0.75cm of 7_4] {};
+        \node[node_invisible] (inv_2_5) [left=0.75cm of 7_2] {};
+        \node[node_invisible] (inv_2_6) [left=0.75cm of 7_3] {};
+        %connections with invisible nodes
+        \draw[dashed, thick, gray]  (3_1) -- (inv_1_1);
+        \draw[dashed, thick, gray]  (3_1) -- (inv_1_2);
+        \draw[dashed, thick, gray]  (3_2) -- (inv_1_5);
+        \draw[dashed, thick, gray]  (3_3) -- (inv_1_6);
+        \draw[dashed, thick, gray]  (3_4) -- (inv_1_3);
+        \draw[dashed, thick, gray]  (3_4) -- (inv_1_4);
+        \draw[dashed, thick, gray]  (7_1) -- (inv_2_1);
+        \draw[dashed, thick, gray]  (7_1) -- (inv_2_2);
+        \draw[dashed, thick, gray]  (7_2) -- (inv_2_5);
+        \draw[dashed, thick, gray]  (7_3) -- (inv_2_6);
+        \draw[dashed, thick, gray]  (7_4) -- (inv_2_3);
+        \draw[dashed, thick, gray]  (7_4) -- (inv_2_4);
+
+        %connections input and first hidden layer
+        \draw[-, thick, gray]  (1_1) -- (2_1);
+        \draw[-, thick, gray]  (1_1) -- (2_2);
+        \draw[-, thick, gray]  (1_1) -- (2_3);
+        \draw[-, thick, gray]  (1_1) -- (2_4);
+        \draw[-, thick, gray]  (1_2) -- (2_1);
+        \draw[-, thick, gray]  (1_2) -- (2_2);
+        \draw[-, thick, gray]  (1_2) -- (2_3);
+        \draw[-, thick, gray]  (1_2) -- (2_4);
+        \draw[-, thick, gray]  (1_3) -- (2_1);
+        \draw[-, thick, gray]  (1_3) -- (2_2);
+        \draw[-, thick, gray]  (1_3) -- (2_3);
+        \draw[-, thick, gray]  (1_3) -- (2_4);
+
+        %connections first and second hidden layer
+        \draw[-, thick, gray]  (2_1) -- (3_1);
+        \draw[-, thick, gray]  (2_1) -- (3_2);
+        \draw[-, thick, gray]  (2_1) -- (3_3);
+        \draw[-, thick, gray]  (2_1) -- (3_4);
+        \draw[-, thick, gray]  (2_2) -- (3_1);
+        \draw[-, thick, gray]  (2_2) -- (3_2);
+        \draw[-, thick, gray]  (2_2) -- (3_3);
+        \draw[-, thick, gray]  (2_2) -- (3_4);
+        \draw[-, thick, gray]  (2_3) -- (3_1);
+        \draw[-, thick, gray]  (2_3) -- (3_2);
+        \draw[-, thick, gray]  (2_3) -- (3_3);
+        \draw[-, thick, gray]  (2_3) -- (3_4);
+        \draw[-, thick, gray]  (2_4) -- (3_1);
+        \draw[-, thick, gray]  (2_4) -- (3_2);
+        \draw[-, thick, gray]  (2_4) -- (3_3);
+        \draw[-, thick, gray]  (2_4) -- (3_4);
+
+        %connections output and last hidden layer
+        \draw[-, thick, gray]  (7_1) -- (8_1);
+        \draw[-, thick, gray]  (7_1) -- (8_2);
+        \draw[-, thick, gray]  (7_1) -- (8_3);
+        \draw[-, thick, gray]  (7_2) -- (8_1);
+        \draw[-, thick, gray]  (7_2) -- (8_2);
+        \draw[-, thick, gray]  (7_2) -- (8_3);
+        \draw[-, thick, gray]  (7_3) -- (8_1);
+        \draw[-, thick, gray]  (7_3) -- (8_2);
+        \draw[-, thick, gray]  (7_3) -- (8_3);
+        \draw[-, thick, gray]  (7_4) -- (8_1);
+        \draw[-, thick, gray]  (7_4) -- (8_2);
+        \draw[-, thick, gray]  (7_4) -- (8_3);
+        
+
+    \end{tikzpicture}
+    \caption{very beautiful illustration if neural networks  }
+\end{figure}

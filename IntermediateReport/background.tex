@@ -1,0 +1,124 @@
+This introductory section lays the theoretical foundation of Bravais lattices and GNNs. 
+We start with a short recap of lattice structures in 2d and 3d and then continue with 
+the most fundamental background of Graph-Neural Networks (GNN). 
+Results on Bravais lattices can be found in many textbooks. Subsection~\ref{sec:brav_latt} follows~\cite{Schwarzenberger} and ~\cite{symGroupsApplications}.
+Introduction to Graph Neural Networks can be found for example in~\cite{IntroMessagePassing} which is also the main reference for section~\ref{sec:fund_gnns}.
+
+\subsection{Bravais lattice}
+\label{sec:brav_latt}
+Let $d\in\N$ and $\{b_i\}_{i=1,\dots,d}\subset \R^d$ a basis of $\R^d$. The set 
+\begin{equation*}
+    \Omega\coloneq\left\{\sum_{i=1}^{d}z_i b_i: z_i\in\Z\,\forall i\in\{1,\dots,d\}\right\}
+\end{equation*}
+is called a $d$-dimensional lattice. Given any subset $S\subset\R^d$, we define its point group $G_S$ to be
+\begin{equation*}
+    G_S\coloneq \left\{M\in O(d) : MS=S\right\}\subset O(d).
+\end{equation*}
+$G_S$ is obviously a subgroup of $O(d)$. We say that two $d$-dimensional lattices $\Omega_1, \Omega_2\subset \R^d$ are of the same Bravais type if
+there exists $g\in GL_n(\R)$ such that $G_{\Omega_1}=g G_{\Omega_2} g^{-1}$ and $\Omega_1=g\Omega_2$. 
+Being of the same Bravais type introduces an equivalence relation on the set of all $d$-dimensional lattices. We refer to the equivalence classes as Bravais classes.
+A natural question arising is about the total number of Bravais classes. Despite being a very interesting and challenging problem,
+we will leave this question to the mathematicians. For us, the result is more important than the actual proof. One obtains the following result:
+For $d=2$ there are 5 Bravais classes and for $d=3$ there are 14 Bravais classes. 
+Roughly speaking, they can be distinguished by the relative lengths of the basis vectors $b_i$ and the angles between them.
+Visualizations and further notes on each Bravais class can be found for example in~\cite{kittel}.
+
+\subsection{Fundamentals of GNNs}
+\label{sec:fund_gnns}
+To talk about graphs, we first have to agree on some notation: Let $V$ be a set and $E\subset V\times V$. The tuple $G=(V,E)$ is called a graph. Furthermore, we call an element $x\in V$ a node and a tuple 
+$(x, y)\in E$ a directed edge from $x$ to $y$, and we say that $x$ is a neighbor of $y$. 
+In case $(x,y)\in E$ implies $(y,x)\in E$, we speak of an undirected graph.
+In that case, we can think of elements in $E$ as unordered tuples $\{x,y\}$ instead of ordered ones. We still call $\{x,y\}$ an edge between $x$ and $y$.
+For $y\in V$ we define the neighborhood $N_y$ of $y$ to be the set of all neighbors, i.e.
+\begin{equation}
+    \label{eq:def_neighbors}
+    N_y\coloneq\left\{x\in V : (x,y)\in E\right\}\subset V.
+\end{equation}
+Furthermore, we assign to each node $x\in V$ a vector $v_x\in\R^n$ called node feature and to each edge $(x, y)\in E$ a vector $e_{x,y}\in\R^m$ called edge feature. 
+
+Roughly, a GNN takes a graph with all its nodes and edge features as an input and manipulates these features in each step. 
+More than that, a GNN can transform the structure of the graph itself, e.g. by introducing new nodes or edges. 
+However, we will not go into detail about this possibility and stick to the simpler case of manipulating only node and edge-features.
+Furthermore, we restrict ourselves to the case where the GNN does not alter the edge features.
+\begin{SCfigure}[1][ht]
+\centering
+\label{fig:gnn}
+\begin{tikzpicture}[
+    node_r/.style={circle, draw=red!60, fill=red!5, very thick, minimum size=7mm},
+    node_o/.style={circle, draw=orange!60, fill=orange!5, very thick, minimum size=7mm},
+    node_g/.style={circle, draw=gray!60, fill=gray!5, very thick, minimum size=7mm},
+    node/.style={circle, draw=green!60, fill=green!5, very thick, minimum size=7mm},
+    mess/.style={rectangle, draw=green!60, fill=green!5, very thick, minimum size=7mm},
+    ]
+    %Nodes step 1
+    \node[node_r] (centernode)                          {$v_c$};
+    \node[node] (top)           [above=of centernode]   {$v_x$};
+    \node[node_o] (bottom)        [below=of centernode]   {};
+    \node[node] (right)         [right=of centernode]   {$v_y$};
+    \node[node] (left)          [left=of centernode]    {$v_z$};
+    \node[node_g] (llt)           [above left=of left]    {};
+    \node[node_g] (llb)           [below left=of left]    {};
+    \node[node_g] (rrt)           [above right=of right]    {};
+    \node[node_g] (rrb)           [below right=of right]    {};
+
+    %Nodes step 2
+    \node[mess] (mess_top)           [below=of bottom]   {$m_x$};
+    \node[node_r] (centernode_2)  [below=of mess_top]     {$v_c$};
+    \node[mess] (mess_right)         [right=of centernode_2]   {$m_y$};
+    \node[mess] (mess_left)          [left=of centernode_2]    {$m_z$};
+
+    %Nodes step 3
+    \node[node_r] (centernode_3)  [below=of centernode_2]     {$v_c$};
+    \node[mess] (mess_final)      [left=of centernode_3]   {$m_{x+y+z}$};
+
+    %Nodes step 4
+    \node[node_r] (centernode_4)  [below=of centernode_3]     {$\widehat{v_c}$};
+    
+    %Lines step 1
+    \draw[->, thick]  (top.south) -- node[anchor=west]{$e_{x,c}$} (centernode.north);
+    \draw[->, thick] (left.east) -- node[anchor=south]{$e_{z,c}$} (centernode.west);
+    \draw[->, thick] (right.west) -- node[anchor=north]{$e_{y,c}$} (centernode.east);
+    \draw[->, thick, gray] (centernode.south) -- (bottom.north);
+    \draw[->, thick, gray] (left.north west) -- (llt.south east);
+    \draw[->, thick, gray] (left.south west) -- (llb.north east);
+    \draw[->, thick, gray] (right.north east) -- (rrt.south west);
+    \draw[->, thick, gray] (right.south east) -- (rrb.north west);
+
+    %Lines step 2
+    \draw[->, thick]  (mess_top.south) -- (centernode_2.north);
+    \draw[->, thick] (mess_left.east) -- (centernode_2.west);
+    \draw[->, thick] (mess_right.west) -- (centernode_2.east);
+
+    %Lines step 3
+    \draw[->, thick]  (mess_final.east) -- (centernode_3.west);
+
+    \draw[->, very thick, gray] (-4,-0) -- node[anchor=east, black]{$\phi_{mes}$} (-4,-5.2);
+    \draw[->, very thick, gray] (-4,-5.5) -- node[anchor=east, black]{$\phi_{agg}$} (-4,-7.2);
+    \draw[->, very thick, gray] (-4,-7.5) -- node[anchor=east, black]{$\phi_{upd}$} (-4,-9.2);
+    %\draw[->] (rightsquare.south) .. controls +(down:7mm) and +(right:7mm) .. (lowercircle.east);
+\end{tikzpicture}
+\caption{Illustration of the message passing procedure according to equation~\eqref{eq:mess_pass}. 
+The neighbors of node $c$ (red) are the nodes $x,y,z$ (green). Attention: According to equation~\eqref{eq:def_neighbors} the orange node is not regarded as a neighbor of $c$ as the edge points in the wrong direction.
+For each neighbor ($x,y,z$), $\phi_{mes}$ computes messages ($m_x,m_y,m_z$) which are sent to $c$.
+Then, $\phi_{agg}$ aggregates these three messages and outputs one overall message $m_{x+y+z}$ that is sent to $c$. 
+In the last step, $\phi_{upd}$ updates the node value $v_c$ to a new value $\widehat{v_c}$.  
+}
+\end{SCfigure}
+Let us make these ideas a bit more rigorous (see figure~\ref{fig:gnn} for an illustration):  
+Let $(V,E)$ be a graph with node features $\{v_x\in\R^n : x\in V\}$ and edge features $\{e_{x,y}\in\R^m:(x,y)\in E\}$.
+For each $c\in V$ a new node feature $\widehat{v_c}$ is calculated according to the following rule
+\begin{equation}
+    \label{eq:mess_pass}
+    \widehat{v_c}=\phi_{upd}\left(
+        v_c, \phi_{agg}\left(\left\{
+            \phi_{mes}\left(v_y,v_c, e_{y,c}\right):y\in N_c
+            \right\}\right)
+    \right),
+\end{equation}
+where $\phi_{upd},\phi_{agg},\phi_{mes}$ denote differentiable functions. These three functions are commonly interpreted as follows:
+$\phi_{mes}$ takes as inputs the node value $v_c$ and the node value $v_y$ of one neighbor $y$ of $c$ as well as the value $e_{y,c}$ of the edge $(y,c)$. 
+Depending on these inputs, it then computes a value, which can be thought of as a message originating from node $y$ which is sent to node $c$.
+$\phi_{agg}$ collects all these messages to node $c$ and aggregates them in some way, so that the output can be thought of as one overall message to node $c$.
+$\phi_{upd}$ takes this overall message as well as the value of node $c$ and computes, how the value of node $c$ is altered.
+Unsurprisingly, this scheme is called Message-Passing-Layer. Given a specific problem, that is required to be solved by a GNN, the challenge is to make appropriate choices
+for $\phi_{upd},\phi_{agg},\phi_{mes}$ that suit the problem at hand. Furthermore, one has to decide how many iterations of the above procedure are suitable.

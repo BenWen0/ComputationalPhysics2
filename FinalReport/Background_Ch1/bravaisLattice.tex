@@ -1,0 +1,126 @@
+Let $d\in\N$ and $\{b_i\}_{i=1,\dots,d}\subset \R^d$ a basis of $\R^d$. The set 
+\begin{equation*}
+    \Omega\coloneq\left\{\sum_{i=1}^{d}z_i b_i: z_i\in\Z\,\forall i\in\{1,\dots,d\}\right\}
+\end{equation*}
+is called a $d$-dimensional lattice. Given any subset $S\subset\R^d$, we define its point group $G_S$ to be
+\begin{equation*}
+    G_S\coloneq \left\{M\in O(d) : MS=S\right\}\subset O(d).
+\end{equation*}
+$G_S$ is obviously a subgroup of $O(d)$. We say that two $d$-dimensional lattices $\Omega_1, \Omega_2\subset \R^d$ are of the same Bravais type if
+there exists $g\in GL_n(\R)$ such that $G_{\Omega_1}=g G_{\Omega_2} g^{-1}$ and $\Omega_1=g\Omega_2$. 
+Being of the same Bravais type introduces an equivalence relation on the set of all $d$-dimensional lattices. We refer to the equivalence classes as Bravais classes.
+A natural question arising is about the total number of Bravais classes. Despite being a very interesting and challenging problem,
+we will leave this question to the mathematicians. For us, the result is more important than the actual proof. One obtains the following result:
+For $d=2$ there are 5 Bravais classes and for $d=3$ there are 14 Bravais classes. 
+Roughly speaking, they can be distinguished by the relative lengths of the basis vectors $b_i$ and the angles between them.
+Visualizations of all Bravais classes for $d=2$ can be found in figure~\ref{fig:bravais2D}
+Visualizations for $d=3$ and further notes on each Bravais class can be found for example in~\cite{kittel}.
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[t]{0.3\textwidth}
+        \centering
+        \begin{tikzpicture}[
+            node distance=1cm and 1cm,
+            node/.style={circle, inner sep=0pt, fill=black, minimum size=2mm}
+        ]
+        \node[node] (n1) {};
+        \node[node] (n2) [above=of n1]{}; 
+        \node[node] (n3) [right=of n1]{};  
+        \node[node] (n4) [right=of n2]{}; 
+        \draw[-, thick]  (n1) -- node[anchor=east, black]{$b$} (n2);   
+        \draw[-, thick]  (n1) -- node[anchor=north, black]{$a$} (n3); 
+        \draw[-, thick]  (n2) -- (n4);
+        \draw[-, thick]  (n4) -- (n3);        
+        \draw [black,thick,domain=0:90] plot ({0.65*cos(\x)}, {0.65*sin(\x)}) node[anchor=north west, black]{$\phi$};
+        \end{tikzpicture}
+        \caption{$\phi=\frac{\pi}{2}$, $a=b$}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.3\textwidth}
+        \centering
+        \begin{tikzpicture}[
+            node distance=1cm and 2cm,
+            node/.style={circle, inner sep=0pt, fill=black, minimum size=2mm}
+        ]
+        \node[node] (n1) {};
+        \node[node] (n2) [above=of n1]{}; 
+        \node[node] (n3) [right=of n1]{};  
+        \node[node] (n4) [right=of n2]{}; 
+        \draw[-, thick]  (n1) -- node[anchor=east, black]{$b$} (n2);   
+        \draw[-, thick]  (n1) -- node[anchor=north, black]{$a$} (n3); 
+        \draw[-, thick]  (n2) -- (n4);
+        \draw[-, thick]  (n4) -- (n3);        
+        \draw [black,thick,domain=0:90] plot ({0.65*cos(\x)}, {0.65*sin(\x)}) node[anchor=north west, black]{$\phi$};
+        \end{tikzpicture}
+        \caption{$\phi=\frac{\pi}{2}$, $a\neq b$}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.3\textwidth}
+        \centering
+        \begin{tikzpicture}[
+            node distance=1cm and 2cm,
+            node/.style={circle, inner sep=0pt, fill=black, minimum size=2mm}
+        ]
+        \node[node] (n1) {};
+        \node[node] (n2) [above=of n1]{}; 
+        \node[node] (n3) [right=of n1]{};  
+        \node[node] (n4) [right=of n2]{}; 
+        \node[node] (n5) [above right=0.5cm and 1cm of n1] {};
+        \draw[-, thick]  (n1) -- node[anchor=east, black]{$b$} (n2);   
+        \draw[-, thick]  (n1) -- node[anchor=north, black]{$a$} (n3); 
+        \draw[-, thick]  (n2) -- (n4);
+        \draw[-, thick]  (n4) -- (n3);        
+        \draw [black,thick,domain=0:90] plot ({0.65*cos(\x)}, {0.65*sin(\x)}) node[anchor=north west, black]{$\phi$};
+        \end{tikzpicture}
+        \caption{$\phi=\frac{\pi}{2}$, $a\neq b$}
+    \end{subfigure}
+
+    \begin{subfigure}[t]{0.3\textwidth}
+        \centering
+        \begin{tikzpicture}[
+            node distance=1.2cm and 1.4cm,
+            node/.style={circle, inner sep=0pt, fill=black, minimum size=2mm}
+        ]
+        \node[node] (n1) {};
+        \node[node] (n2) [above right=1cm and 0.5cm of n1]{}; 
+        \node[node] (n3) [right=of n1]{};  
+        \node[node] (n4) [right=of n2]{}; 
+        \draw[-, thick]  (n1) -- node[anchor=east, black]{$b$} (n2);   
+        \draw[-, thick]  (n1) -- node[anchor=north, black]{$a$} (n3); 
+        \draw[-, thick]  (n2) -- (n4);
+        \draw[-, thick]  (n4) -- (n3);        
+        \draw [black,thick,domain=0:60] plot ({0.7*cos(\x)}, {0.7*sin(\x)}) node[anchor=north, black]{$\phi$};
+        \end{tikzpicture}
+        \caption{$\phi\neq\frac{\pi}{2}$, $a\neq b$}
+    \end{subfigure}
+    \begin{subfigure}[t]{0.3\textwidth}
+        \centering
+        \begin{tikzpicture}[
+            node distance=1cm and 1cm,
+            node/.style={circle, inner sep=0pt, fill=black, minimum size=2mm}
+        ]
+        \node[node,label={[label distance=-0.15cm]80:$\phi$}] (n1) {};
+        \node[node] (n2) [right=of n1]{}; 
+        \node[node] (n3) [above left=0.866cm and 0.5cm of n1]{};
+        \node[node] (n4) [above left=0.866cm and 0.5cm of n2]{};  
+        \node[node] (n5) [above right=0.866cm and 0.5cm of n2]{};
+        \node[node] (n6) [above right=0.866cm and 0.5cm of n3]{};
+        \node[node] (n7) [above left=0.866cm and 0.5cm of n5]{};
+        \draw[-, thick]  (n1) -- node[anchor=north, black]{$b$} (n2);   
+        \draw[-, thick]  (n1) -- node[anchor=east, black]{$a$} (n3); 
+        \draw[dashed, thick]  (n2) -- (n4);
+        \draw[dashed, thick]  (n2) -- (n5); 
+        \draw[dashed, thick]  (n3) -- (n4);
+        \draw[dashed, thick]  (n3) -- (n6);
+        \draw[dashed, thick]  (n5) -- (n7);
+        \draw[dashed, thick]  (n6) -- (n7);
+        \draw [black,thick,domain=0:120] plot ({0.7*cos(\x)}, {0.7*sin(\x)});
+        \end{tikzpicture}
+        \caption{$\phi=\frac{2\pi}{3}$, $a=b$}
+    \end{subfigure}
+    
+    \caption{All different Bravais classes in two dimensions. They are called (a) square, (b) rectangle,
+    (c) centered rectangle, (d) oblique, (e) hexagonal.}
+    \label{fig:bravais2D}
+\end{figure}
