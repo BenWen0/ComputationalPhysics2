@@ -12,12 +12,13 @@ This lattice now has $N_xN_y$ elements.
 Next, we add some noise to the elements in $\Omega$ and restrict their coordinates to a certain range. For this instance, let $\mu,\sigma,s\in\R_+$ and draw random samples from
 a normal distribution with mean value $\mu$ and standard deviation $\sigma$. Secondly, we scale these random numbers by the factor $s$ 
 and add the scaled noise to all elements in $\Omega$ (component-wise, i.e. add noise to the first coordinate of the elements in $\Omega$ as well as to the second coordinate).
-Restricting all coordinates to a certain range is simply done. Let $x_{max}, y_{max}\in\R_+$ and replace each $(x,y)\in\Omega$ with $(x \mod x_{max}, y \mod y_{max})$ (modular arithmetic with non-integers values: stupid!).
+Restricting all coordinates to a certain range is simply done. Let $x_{max}, y_{max}\in\R_+$ and replace each $(x,y)\in\Omega$ with $(x \mod x_{max}, y \mod y_{max})$ 
+\comment{modular arithmetic with non-integers values: stupid!}.
 Next, we want to turn our lattice $\Omega$ into a graph $(V,E)$. Obviously, we can set $V=\Omega$ and what remains is the choice of edges. For this, we take $r\in\R_+$ and set
 \begin{equation*}
     E=\{(v, w)\in V\times V: \norm{v-w}<r\},
 \end{equation*}
-where $\norm{\cdot}$ denotes the standard norm in $R^d$ [not quite, actually I used the 3-norm].
+where $\norm{\cdot}$ denotes the standard norm in $R^d$ \comment{not quite, actually I used the 3-norm}.
 Lastly, we choose $p_n,p_e\in[0,1]$ and randomly delete nodes with probability $p_n$ (and edges with probability $p_e$ respectively).
 
 The creation of three-dimensional lattices is completely analogously. The only difference is that we have to pick three basis vectors $e_x,e_y,e_z$ which have length $a,b,c\in\R_+$ and 
@@ -36,6 +37,6 @@ Figure~\ref{fig:examplesLattices} shows two different lattices created by the ab
         \centering
         \caption{3d}
     \end{subfigure}
-    \caption{Examples of lattices created by the procedure described in section~\ref{sec:creationLattice}.}
+    \caption{Examples of lattices created by the procedure described in section~\ref{sec:creationLattice}. \comment{TODO}}
     \label{fig:examplesLattices}
 \end{figure}
