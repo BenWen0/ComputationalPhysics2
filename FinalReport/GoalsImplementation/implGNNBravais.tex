@@ -1,0 +1,21 @@
+Once we have a good amount of training data at hand, we need to determine the optimal structure of the GNN. This amounts to finding the
+right functions $\phi_{upd},\phi_{mes},\phi_{agg}$ in equation~\ref{eq:mess_pass}, a proper number of message passing layers and suitabele edge-/node-features.
+
+\idea{
+    In allen folgenden Experimenten war $\phi_{agg}$ die Funktionen, die alle ihre inputs addiert.
+    Die Funktionen $\phi_{mes}$ ist ein allgemeines Feed-Forward Neuronales Netz einer bestimmten Tiefe $d_m$ und einheitlicher Breite $w_m$.
+    Tiefe meint hier die Anzahl an hidden layers und einheitliche breite meint hier, dass die Anzahl an nodes in allen hidden Layers gleich bleibt.
+    Analog ist die Funktion $\phi_{upd}$ ebenfalls ein allgemeines Feed-Forward Neuronales Netz einer bestimmten Tiefe $d_u$ und einheitlicher Breite $w_u$.
+    Weiterhin kommt zu diesen 4 Parametern noch ein zusätzlicher Parameter hinzu:
+    Erstens, die Anzahl an message passing Layern des GNNs, wir bezeichnen sie mit Tiefe $d_G$ des GNNs.
+    Via Grid-Search wird versucht, über diese 5 Paramter hinweg ein Optimum zu finden.
+    Weil 5 Parameter bereits realtiv viel sind, verzichten wir darauf, zusätzlich noch die Node- und Edge-features zu variieren. Als Node- und Edge-Featuzres wählen wir...
+    Sobald wir unter diesen fünf Parametern eine optimale Einstellung gefunden haben, werden wir bei dieser optijmalen Einstellung noch einen kurzen Blick auf
+    verschiedene Edge-/Node-Features werfen.
+}
+
+\idea{
+    Die eigentliche Implementierung basiert auf der MessagePassing base class des PyG packages. 
+    Diese ist so gebaut, dass der Benutzer die Funktionen $\phi_{upd},\phi_{mes},\phi_{agg}$ frei definieren kann,
+    die eigentliche Arbeit geschieht im Hintergrund und soll daher hier nicht wieter erläutert werden.
+}

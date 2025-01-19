@@ -9,6 +9,6 @@
 \contentsline {subsection}{\numberline {2.2}Implementing the GNN}{8}{subsection.2.2}%
 \contentsline {subsection}{\numberline {2.3}On the Problem of Percolation}{8}{subsection.2.3}%
 \contentsline {section}{\numberline {3}Results and Discussion}{8}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Classifying Graphs into Bravais Classes}{8}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}On the Problem of Percolation}{8}{subsection.3.2}%
-\contentsline {section}{\numberline {4}Conclusion and Outlook}{8}{section.4}%
+\contentsline {subsection}{\numberline {3.1}Classifying Graphs into Bravais Classes}{9}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}On the Problem of Percolation}{9}{subsection.3.2}%
+\contentsline {section}{\numberline {4}Conclusion and Outlook}{9}{section.4}%

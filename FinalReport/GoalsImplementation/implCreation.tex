@@ -6,7 +6,8 @@ Hence, we will only create finite subsets of lattice but, for sake of simplicity
 
 Let us start with the creation of two-dimensional lattices.
 Choose $a,b\in\R_+$, $\phi\in(0,\pi)$ and set
-$e_x=(0,a)^T,\,e_y=(b\cos(\phi), b\sin(\phi))^T$. Then, the set $\tilde{\Omega}=\Z e_x\times\Z e_y\subset\R^2$ is a two-dimensional lattice.
+$e_x=(0,a)^T,\,e_y=(b\cos(\phi), b\sin(\phi))^T$ (for visulaization ogf $a,b$ and $\theta$, see figure~\ref{fig:bravais2D}). 
+Then, the set $\tilde{\Omega}=\Z e_x\times\Z e_y\subset\R^2$ is a two-dimensional lattice.
 As mentioned, we only work with finite subsets of $\Omega$. Hence, we choose $N_x,N_y\in\N$ and set $\Omega=\N_{\leq N_x}e_x\times\N_{\leq N_y}e_y\subset\tilde{\Omega}$.
 This lattice now has $N_xN_y$ elements.
 Next, we add some noise to the elements in $\Omega$ and restrict their coordinates to a certain range. For this instance, let $\mu,\sigma,s\in\R_+$ and draw random samples from
@@ -24,6 +25,8 @@ Lastly, we choose $p_n,p_e\in[0,1]$ and randomly delete nodes with probability $
 The creation of three-dimensional lattices is completely analogously. The only difference is that we have to pick three basis vectors $e_x,e_y,e_z$ which have length $a,b,c\in\R_+$ and 
 enclose angles $\phi=\angle(e_x, e_y),\,\psi=\angle(e_x,e_z),\,\chi=\angle(e_y,e_z)$. 
 
+\comment{specfic settings for $a,b,..$, how many graphs per bravais class, ...}
+
 Figure~\ref{fig:examplesLattices} shows two different lattices created by the above procedure.
 
 \begin{figure}
@@ -40,3 +43,5 @@ Figure~\ref{fig:examplesLattices} shows two different lattices created by the ab
     \caption{Examples of lattices created by the procedure described in section~\ref{sec:creationLattice}. \comment{TODO}}
     \label{fig:examplesLattices}
 \end{figure}
+
+\comment{Furthermore, they have to be labeled so that they can serve as training data.}
