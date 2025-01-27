@@ -14,34 +14,48 @@ Next, we add some noise to the elements in $\Omega$ and restrict their coordinat
 a normal distribution with mean value $\mu$ and standard deviation $\sigma$. Secondly, we scale these random numbers by the factor $s$ 
 and add the scaled noise to all elements in $\Omega$ (component-wise, i.e. add noise to the first coordinate of the elements in $\Omega$ as well as to the second coordinate).
 Restricting all coordinates to a certain range is simply done. Let $x_{max}, y_{max}\in\R_+$ and replace each $(x,y)\in\Omega$ with $(x \mod x_{max}, y \mod y_{max})$ 
-\comment{modular arithmetic with non-integers values: stupid!}.
 Next, we want to turn our lattice $\Omega$ into a graph $(V,E)$. Obviously, we can set $V=\Omega$ and what remains is the choice of edges. For this, we take $r\in\R_+$ and set
 \begin{equation*}
     E=\{(v, w)\in V\times V: \norm{v-w}<r\},
 \end{equation*}
-where $\norm{\cdot}$ denotes the standard norm in $R^d$ \comment{not quite, actually I used the 3-norm}.
+where $\norm{\cdot}$ denotes the standard norm in $R^d$, i.e. nodes that are close together will be connected.
 Lastly, we choose $p_n,p_e\in[0,1]$ and randomly delete nodes with probability $p_n$ (and edges with probability $p_e$ respectively).
 
 The creation of three-dimensional lattices is completely analogously. The only difference is that we have to pick three basis vectors $e_x,e_y,e_z$ which have length $a,b,c\in\R_+$ and 
 enclose angles $\phi=\angle(e_x, e_y),\,\psi=\angle(e_x,e_z),\,\chi=\angle(e_y,e_z)$. 
 
-\comment{specfic settings for $a,b,..$, how many graphs per bravais class, ...}
-
 Figure~\ref{fig:examplesLattices} shows two different lattices created by the above procedure.
 
 \begin{figure}
     \centering
-    \begin{subfigure}[t]{0.4\textwidth}
+    \begin{subfigure}[t]{0.45\textwidth}
         \centering
+        \includegraphics[width=\textwidth]{Background_Ch1/square2d.png}
         \caption{2d}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[t]{0.4\textwidth}
+    \begin{subfigure}[t]{0.45\textwidth}
         \centering
+        \includegraphics[width=\textwidth]{Background_Ch1/cubic3d.png}
         \caption{3d}
     \end{subfigure}
-    \caption{Examples of lattices created by the procedure described in section~\ref{sec:creationLattice}. \comment{TODO}}
+    \caption{Examples of lattices created by the procedure described in section~\ref{sec:creationLattice}.}
     \label{fig:examplesLattices}
 \end{figure}
 
-\comment{Furthermore, they have to be labeled so that they can serve as training data.}
+According to the above procdeure, we are able, to generate training and test datasets for our GNN, both in 2d and in 3d.
+We start with a quick describition of the 2d-dataset. 
+First, epending on the specific values of $a,b$ and $\theta$, different graphs for different Bravais classes can be generated 
+(take again a look at figure~\ref{fig:bravais2D} as a reminder, which values of $a,b,\theta$ result in which Bravais class).
+Recall, that in some cases $\theta=\frac{\pi}{2}$ is required. In order to introduce a bit artifical noise, we allow for values
+in the range $(0.99\frac{\pi}{2}, 1.01\frac{\pi}{2})$.
+Accordingly, when the side lengths are required to fullfill $a=b$, we allow for deviations of $1\%$, 
+i.e. such that $0.99\leq\frac{a}{b}\leq1.01$.
+Furthermore, we set the minimal side length to be 0.1 and the maximal side length to be 10. 
+The parameters determining the above mentioned noise, where chosen to be $\sigma=0.5,\mu=0$. The amplitude of
+the noise in x-direction was taken to be $s=0.07a$ (depeneding on the side-length $a$) as well as $s=0.07b$
+in y-direction. The probabilities $p_n,p_e$ for randomly droping nodes/edges were taken to be $p_n=p_e=0.01$
+According to these rules, we created 10000 graphs per Bravais class. Since there are 5 Bravais classes in total, the
+2d-dataset consists of 50000 graphs, $20\%$ were taken to be the test set and the remaining $80\%4 $ constitute the training set.
+
+\comment{3d  Datensatz}

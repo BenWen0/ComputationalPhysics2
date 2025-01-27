@@ -1,0 +1,67 @@
+\label{sec:implPercolation}
+I was asked to experiment with the so called TopKPooling layer. What follows 
+is a rough overview over the principles of this layer. 
+For additional information see~\cite{topKPooling}, where this layer was originally proposed.
+The following explanation of the pooling procedure might become more clear with
+an illustration at hand. See figure~\ref{fig:topKPooling}.
+Suppose $G=(V,E)$ is a graph. Recall from section~\ref{sec:fund_gnns}, 
+that each node $x\in V$ has a node feature $v_x\in\R^n$. We can organize all node
+features in a matrix $X^l\in\text{Mat}(|V|\times n,\R)$ given by
+\begin{equation*}
+    \left(X^l\right)_{x,j}=\left(v_x\right)_j, \quad x\in V, 1\leq j \leq n.
+    \label{eq:matNodeFeatures}
+\end{equation*}
+Furthermore, we can define the so called adjancecy matrix $A^l\in\text{Mat}(|V|\times |V|,\R)$ given by
+\begin{equation*}
+    \left(A^l\right)_{x,y}=\begin{cases}
+        1 \quad \text{if } \{x,y\}\in E,\\
+        0 \quad \text{if } \{x,y\}\notin E
+    \end{cases}, \quad x,y\in V.
+    \label{eq:matAdjacency}
+\end{equation*}
+For $p\in\R^n$, called the projection vector, we define $y=\frac{X^l p}{\norm{p}}$. 
+Next, choose $k<|N|$ and select the indices of the $k$ highest entries in $y$ and denote the resulting 
+list of indices as $idx\in\N^k$. To each index $i$ in $idx$, there is a corresponding 
+node $x_i\in V$. Therefore, we can equivalently think of $idx$ as a subset $\tilde{V}\subset V$. 
+These are the nodes that will not be deleted during the pooling process. 
+All nodes in $V\setminus\tilde{V}$ will be deleted. 
+The deletion is done as follows: Define $\tilde{X}\in\text{Mat}(k\times n,\R)$ to be the matrix
+consisting of all node feature $v_x$ for $x\in\tilde{V}$, analouguls to equation~\ref{eq:matNodeFeatures}. 
+And define analogously to equation~\ref{eq:matAdjacency} $A^{l+1}\in\text{Mat}(k\times k,\R)$ 
+to be the adjancecy matrix corresponding to the nodes in $\tilde{V}$.
+Next, compute the elementwise product of $\tilde{y}$ and $\tilde{X}$ which leads to new matrix
+$X^{l+1}\in\text{Mat}(k\times n,\R)$. This step is called \glqq{}gate operation\grqq{}.
+The matrices node feature matrix $X^{l+1}$ together with the adjancency matrix $A^{l+1}$
+define a new graph which has $k<|V|$ nodes. Effectivvely, we have reduced the original graph $G$ with
+$|V|$ nodes to a smaller graph. Depending on the choice of the projection vector $p$ we can
+achieve different output graphs $\tilde{G}$. Given a specific problem, the goal of the 
+TopKPooling layer is to learn a suitable projection vector $p$.
+The gate operation steps ensures, that the projection vector is indeed learnable via standard backpropagation
+(the precise argument why the gate operation is necessary for learning $p$ is a bit technical, we refer to~\cite{topKPooling})
+\begin{figure}
+    \centering
+    \includegraphics[width=0.95\textwidth]{GoalsImplementation/topKpooling}
+    \caption{Illustration of the TopKPooling layer. Taken from~\cite{topKPooling}.}
+    \label{fig:topKPooling}
+\end{figure}
+
+Obviously, the dataset created in section~\ref{sec:creationLattice} is not feasable
+for the percolation problem. Instead, the dataset for the percolation problem was created by Jonas Buba and his 
+collegeaus. The dataset consists of 1614 planar graphs in total, 822 of which are not percolating, whereas
+the remaining 792 are percolating. See figure~\ref{fig:expPercNonPerc} for examples of graphs that are in the dataset.
+The whole set was again partitioned in a training set ($80\%$ of the total number of graphs as above)
+and a test set ($20\%$). The nodes have their position in the unit cube as attributes, whereas the graphs do not have any attributes.
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[t]{0.45\textwidth}
+        \centering
+        \caption{Percolating}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.45\textwidth}
+        \centering
+        \caption{Non-Percolating}
+    \end{subfigure}
+    \caption{Example of graphs that are in the percolation dataset.\comment{TODO}}
+    \label{fig:expPercNonPerc}
+\end{figure}

@@ -1,0 +1,80 @@
+As mentioned in~\ref{sec:implPercolation} I was asked to experiment with the TopKPooling layer. 
+However, before presenting the results on how well this layer performed, we will give an argument, why the percolation problem 
+cannot be solved by a MessagePassing GNN, no matter how clever it might be designed.
+Suppose there is a Message Passing GNN, that can solve the percolation problem, i.e. given any graph 
+with nodes positioned inside the unit square, it can determine whether or not the graph is percolating. 
+Now, take any graph $G$ you like and choose two nodes $n$, $m$, that are not connected by an edge (i.e. $\{n,m\}\notin E$). 
+Assign each node different from $n, m$ a position inside 
+$(r, 1-r)\times(r, 1-r)$, place node $n$ inside the strip $[0,1]\times [0,r]$ and $m$ inside $[0,1]\times[1-r, 1]$. 
+Furthermore, add the new edge $\{n,m\}$, which gives a new graph $\tilde{G}$ that has the same nodes
+as $G$ and the same edges plus the one additinal more. Next, run the GNN on the graph $\tilde{G}$. 
+Either, the GNN outputs that $\tilde{G}$ is not percolating or it outputs that $\tilde{G}$ is percolating. 
+If the graph was percolating, the nodes $n$ and $m$ were already connected in $G$. 
+In case $\tilde{G}$ is not percolating, $n$ and $m$ are not connected in $G$. 
+In total, we can use our GNN to detect, whether two randomly chosen nodes ($n$ and $m$) in a randomly 
+chosen graph ($G$) are connected via a path or not.
+However, such a GNN can clearly not exist (suppose there were such a GNN, 
+then consider the graph shown in figure~\ref{fig:gnn_connectedComponent}, which leads to
+a contradiction).
+Hence, a GNN that is capable of solving the percolation problem can not exist too.
+\begin{figure}
+    \centering
+    \begin{tikzpicture}[
+        node/.style={circle, inner sep=0pt, fill=black, minimum size=3mm},
+        node_missing/.style={circle, inner sep=0pt, fill=black, minimum size=1mm}
+    ]
+    \node[node, label={$0$}] (n1) [] {1};
+    \node[node, label={$1$}] (n2) [right=of n1] {2};
+    \node[node, label={$2$}] (n3) [right=of n2] {3};
+    \node[node_missing] (nm_1) [right=0.7cm of n3] {};
+    \node[node_missing] (nm_2) [right=0.3cm of nm_1] {};
+    \node[node_missing] (nm_3) [right=0.3cm of nm_2] {};
+    \node[node, label={$2l-1$}] (n4) [right=0.7cm of nm_3] {};
+    \node[node, label={$2l$}] (n5) [right=of n4] {};
+    \node[node, label={$2l+1$}] (n6) [right=of n5] {};
+    
+    \draw[very thick]  (n1) -- (n2);
+    \draw[very thick]  (n2) -- (n3);
+    \draw[very thick]  (n4) -- (n5);
+    \draw[very thick]  (n5) -- (n6);
+
+    \end{tikzpicture}
+    \caption{No Message Paassing GNN can detect whether two nodes are in the same connected coomponent. 
+    Suppose such a GNN exists and that it has $l$-layers. Consider the graph with $2l+2$ nodes depicted above. 
+    Since each node can only share information with its $l$-neighrest neighbors, 
+    node 0 can only share information with nodes $0,\cdots,l$
+    and node $2l+1$ can only receive information from nodes $l+1,\cdots,2l+1$. 
+    Hence, there is no possibilty for node $0$ to know about node $2l+1$ and 
+    therefore, the GNN cannot detect, whether they are in the same connected component or not.}
+    \label{fig:gnn_connectedComponent}
+\end{figure}
+Besides beeing provable impossible to solve this problem, I was asked to present some training processes nonetheless. 
+The resulst can be seen in figure~\ref{fig:trainingPerc}. Unsurprisingly, the GNN was not able to solve the percolation problem.
+\begin{figure}
+    \centering
+    \caption{bla bla bla}
+    \label{fig:trainingPerc}
+\end{figure}
+
+As we cannot hope to overcome the percolation problem with pure message passing layers, 
+a natural idea is to try using layers that do not depend in message passing. 
+That is the reason why I was asked work with the TopKPooling-Layer.
+However, there is a good reason, why, even with the TopKPolling, we cannot hope to achieve 
+anything better than in~\ref{fig:trainingPerc}.
+Recall, that the TopKPooling procedure deletes nodes with all its edges and does not create new edges. 
+In particular, it does not presever connected components. To illistrate the point a bit more, 
+consider the follwoing situation: Suppose there is a percolating graph $G$. 
+After going through the TopKPolling layer some node might be deletet, 
+so that the resulting graph is not percolating anymore. 
+Hence, instead of looking at Pooling layers that do not respect cnnected components, we have to look 
+at pooling layers, that preserve connected components.
+Depsite beeing a interesting challenge, this goes beyond the scope of this project.
+Hence, a TopKPolling layer will not help with the percolatino problem. 
+Nonetheless, I was again asked to present some training results. They can be found in figure~\ref{fig:resTopK}. 
+As expected, the training does not show any improvements compared to figure~\ref{fig:trainingPerc}.
+\begin{figure}
+    \centering
+    \caption{bla bla bla}
+    \label{fig:resTopK}
+\end{figure}
+ 

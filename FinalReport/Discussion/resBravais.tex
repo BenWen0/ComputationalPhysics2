@@ -1,0 +1,54 @@
+At first, we start by analyzing the results of training on the 2d-dataset and then go on to the 3d case.
+
+\paragraph{Results on the 2d dataset}
+As mentioned in section~\ref{sec:implGNNBravais} we tested in total 36 different combinations of values for $d_m,w_m,d_u,m_u$.
+Before going into detail which combination led to the best results, we start 
+with a more high-level overview:
+
+The average test loss and test accuracy over all 36 combinations can be found in figure~\ref{fig:avgBravais2d}.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Discussion/plots/bravais2dAvg.png}
+    \caption{avg bravais 2d}
+    \label{fig:avgBravais2d}
+\end{figure}
+With an accuracy of approximately $90\%$, the problem can be considered solved. 
+However, there are non-negligtable difference between models. 
+The model that performed best achieved an accuracy about $95\%$, whereas the model that performed worst
+only managed to get about $67\%$ accuracy. The training process of both models are dpeicted in figure~\ref{fig:bravais2dBestWorst}.
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[t]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Discussion/plots/bravais2dbest.png}
+        \caption{best}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Discussion/plots/bravais2dworst.png}
+        \caption{worst}
+    \end{subfigure}
+    \caption{bravais 2d}
+    \label{fig:bravais2dBestWorst}    
+\end{figure}
+Hence, different values for $d_m,w_m,d_u,m_u$ may lead to drastically different outcomes. 
+
+\paragraph{Results on the 3d dataset}
+As mentioned in section~\ref{sec:implGNNBravais} we chose the model that 
+performed best in the 2d case and tested in on the 3d dataset. 
+As explained in the settings $d_m=,w_m,=d_u=,m_u=$ led to the best results 
+in the 2d case. Without any further tweaks of these paramters or changes in the training procedure,
+the model achieved a test accuracy of $xy\%$ on the 3d dataset (see figure~\ref{fig:bravaisBest3d}).
+\begin{figure}[h]
+    \centering
+    \caption{best bravais 3d}
+    \label{fig:bravaisBest3d}
+\end{figure}
+Out of interest, we trained to worst performing model in the 2d dataset on the 3d dataset too.
+Interestingly, it performed equally bad (see figure~\ref{fig:bravaisWorst3d}).
+\begin{figure}[h]
+    \centering
+    \caption{worst bravais 3d}
+    \label{fig:bravaisWorst3d}
+\end{figure}
