@@ -1,4 +1,4 @@
-As mentioned in~\ref{sec:implPercolation}, I was asked to experiment with the TopKPooling layer as well with message passing layers 
+As mentioned in~\ref{sec:implPercolation}, I was asked to experiment with the Top-K Pooling layer as well with message passing layers 
 to tackle the problem of classifying graphs into percolating and non-percolating. 
 However, before presenting the results on how well different mixtures of these layers performed, we will give an argument, why the percolation problem 
 cannot be solved by a pure message passing GNN, no matter how clever it might be designed.
@@ -73,31 +73,31 @@ a natural idea is to try using layers that do not depend on message passing.
 Furthermore, we learned from figure~\ref{fig:gnn_connectedComponent} that the problem lies 
 in graphs that are \glqq{}too long\grqq{}, or, putting it differently, that have too many nodes.
 Hence, we are looking for layers, that reduce the number of nodes and do not depend on message passing.
-That is the reason why we were asked work with TopKPooling layers.
-However, there is a good reason, why, even with TopKPooling, we cannot hope to achieve 
+That is the reason why we were asked work with Top-K Pooling layers.
+However, there is a good reason, why, even with Top-K Pooling, we cannot hope to achieve 
 anything better than in~\ref{fig:trainingPerc}.
-Recall, that the TopKPooling procedure deletes nodes with all its edges and does not create new edges. 
+Recall, that the Top-K Pooling procedure deletes nodes with all its edges and does not create new edges. 
 In particular, it does not preserve connected components. To illustrate the point a bit more, 
 consider the following situation: Suppose there is a percolating graph $G$. 
-After going through the TopKPooling layer some nodes might be deleted, 
+After going through the Top-K Pooling layer some nodes might be deleted, 
 so that the resulting graph is not percolating anymore. 
 Hence, instead of looking at pooling layers that do not respect connected components, we have to look 
 at pooling layers, that preserve connected components.
 Despite being an interesting challenge, this goes beyond the scope of this project.
 However, there are promising approaches and already existing pooling layers, that preserve structures to some extent (for an overview, see for example~\cite{poolingInGNNs}).
 Unfortunately, these layers are not yet implemented in PyG and implementing these layers goes well beyond this project.
-To conclude, TopKPooling layers will not help with the percolation problem. 
+To conclude, Top-K Pooling layers will not help with the percolation problem. 
 Nonetheless, we were again asked to present some training results. We used the same model as above 
-with the same hyperparameters but introduced a TopKPooling layer after the first message passing layer.
-The TopKPooling layer was configured so that it reduced the number of nodes by $50\%$.  
+with the same hyperparameters but introduced a Top-K Pooling layer after the first message passing layer.
+The Top-K Pooling layer was configured so that it reduced the number of nodes by $50\%$.  
 The training results can be found in figure~\ref{fig:resTopK}.
-As first sight, the training seems a bit more stable than without the TopKPooling layer. 
+As first sight, the training seems a bit more stable than without the Top-K Pooling layer. 
 However, the random fluctuations between $65\%$ and $75\%$ are still present. 
 Overall, the training does not show any improvements regarding the accuracy compared to figure~\ref{fig:trainingPerc}.
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.7\textwidth]{Discussion/plots/percPooling.png}
-    \caption{Training of a message passing GNN additionally equipped with a TopKPooling layer on the percolation problem.}
+    \caption{Training of a message passing GNN additionally equipped with a Top-K Pooling layer on the percolation problem.}
     \label{fig:resTopK}
 \end{figure}
  

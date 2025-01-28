@@ -7,10 +7,10 @@
 \contentsline {section}{\numberline {2}Goals and Implementation}{8}{section.2}%
 \contentsline {subsection}{\numberline {2.1}Lattice Creation}{8}{subsection.2.1}%
 \contentsline {subsection}{\numberline {2.2}Implementing the GNN}{9}{subsection.2.2}%
-\contentsline {subsection}{\numberline {2.3}On the Problem of Percolation}{10}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.3}Percolation and Top-K Pooling}{10}{subsection.2.3}%
 \contentsline {section}{\numberline {3}Results and Discussion}{13}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Classifying Graphs into Bravais Classes}{13}{subsection.3.1}%
 \contentsline {paragraph}{Results on the 2d dataset}{13}{paragraph*.8}%
 \contentsline {paragraph}{Results on the 3d dataset}{15}{paragraph*.13}%
 \contentsline {subsection}{\numberline {3.2}On the Problem of Percolation}{16}{subsection.3.2}%
-\contentsline {section}{\numberline {4}Conclusion and Outlook}{20}{section.4}%
+\contentsline {section}{\numberline {4}Conclusion, Outlook and Code Availability}{20}{section.4}%
