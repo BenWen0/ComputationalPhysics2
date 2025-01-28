@@ -1,9 +1,16 @@
 \label{sec:implPercolation}
-I was asked to experiment with the so called TopKPooling layer. What follows 
-is a rough overview over the principles of this layer. 
+I was asked to experiment with a mixture of the GNN described in the previous section (which layers are MessagePassing layers) and the so called TopKPooling layer.
+How exactly this mixture looks like depends on the specific experiment and will be explained once 
+What follows is a rough overview over the working principles of the TopKPooling layer. 
 For additional information see~\cite{topKPooling}, where this layer was originally proposed.
 The following explanation of the pooling procedure might become more clear with
 an illustration at hand. See figure~\ref{fig:topKPooling}.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.95\textwidth]{GoalsImplementation/topKpooling}
+    \caption{Illustration of the TopKPooling layer. See section~\ref{sec:implPercolation} for an explanation. Taken from~\cite{topKPooling}.}
+    \label{fig:topKPooling}
+\end{figure}
 Suppose $G=(V,E)$ is a graph. Recall from section~\ref{sec:fund_gnns}, 
 that each node $x\in V$ has a node feature $v_x\in\R^n$. We can organize all node
 features in a matrix $X^l\in\text{Mat}(|V|\times n,\R)$ given by
@@ -11,7 +18,7 @@ features in a matrix $X^l\in\text{Mat}(|V|\times n,\R)$ given by
     \left(X^l\right)_{x,j}=\left(v_x\right)_j, \quad x\in V, 1\leq j \leq n.
     \label{eq:matNodeFeatures}
 \end{equation*}
-Furthermore, we can define the so called adjancecy matrix $A^l\in\text{Mat}(|V|\times |V|,\R)$ given by
+Furthermore, we can define the so-called adjacency matrix $A^l\in\text{Mat}(|V|\times |V|,\R)$ to be
 \begin{equation*}
     \left(A^l\right)_{x,y}=\begin{cases}
         1 \quad \text{if } \{x,y\}\in E,\\
@@ -26,42 +33,41 @@ node $x_i\in V$. Therefore, we can equivalently think of $idx$ as a subset $\til
 These are the nodes that will not be deleted during the pooling process. 
 All nodes in $V\setminus\tilde{V}$ will be deleted. 
 The deletion is done as follows: Define $\tilde{X}\in\text{Mat}(k\times n,\R)$ to be the matrix
-consisting of all node feature $v_x$ for $x\in\tilde{V}$, analouguls to equation~\ref{eq:matNodeFeatures}. 
-And define analogously to equation~\ref{eq:matAdjacency} $A^{l+1}\in\text{Mat}(k\times k,\R)$ 
-to be the adjancecy matrix corresponding to the nodes in $\tilde{V}$.
-Next, compute the elementwise product of $\tilde{y}$ and $\tilde{X}$ which leads to new matrix
+consisting of all node feature $v_x$ for $x\in\tilde{V}$, analogues to equation~\ref{eq:matNodeFeatures}. 
+Furthermore, analogously to equation~\ref{eq:matAdjacency}, define $A^{l+1}\in\text{Mat}(k\times k,\R)$ 
+to be the adjacency matrix corresponding to the nodes in $\tilde{V}$.
+Next, compute the elementwise product of $\tilde{y}$ and $\tilde{X}$ which leads to a new matrix
 $X^{l+1}\in\text{Mat}(k\times n,\R)$. This step is called \glqq{}gate operation\grqq{}.
-The matrices node feature matrix $X^{l+1}$ together with the adjancency matrix $A^{l+1}$
-define a new graph which has $k<|V|$ nodes. Effectivvely, we have reduced the original graph $G$ with
+The new node feature matrix $X^{l+1}$ together with the new adjacency matrix $A^{l+1}$
+define a new graph $G^{l+1}$ which has $k<|V|$ nodes. Effectively, we have reduced the original graph $G$ with
 $|V|$ nodes to a smaller graph. Depending on the choice of the projection vector $p$ we can
-achieve different output graphs $\tilde{G}$. Given a specific problem, the goal of the 
+achieve different output graphs $G^{l+1}$. Given a specific problem, the goal of the 
 TopKPooling layer is to learn a suitable projection vector $p$.
-The gate operation steps ensures, that the projection vector is indeed learnable via standard backpropagation
-(the precise argument why the gate operation is necessary for learning $p$ is a bit technical, we refer to~\cite{topKPooling})
-\begin{figure}
-    \centering
-    \includegraphics[width=0.95\textwidth]{GoalsImplementation/topKpooling}
-    \caption{Illustration of the TopKPooling layer. Taken from~\cite{topKPooling}.}
-    \label{fig:topKPooling}
-\end{figure}
+The gate operation step ensures, that the projection vector is indeed learnable via standard backpropagation.
+The precise argument why the gate operation is necessary for learning $p$ is a bit technical, we refer to~\cite{topKPooling}.
+Again, one do not have to implement this layer from scratch, as the PyG library already provides an implementation, where one 
+just have to choose the desired $k$.
 
-Obviously, the dataset created in section~\ref{sec:creationLattice} is not feasable
+Obviously, the dataset created in section~\ref{sec:creationLattice} is not appropriate
 for the percolation problem. Instead, the dataset for the percolation problem was created by Jonas Buba and his 
-collegeaus. The dataset consists of 1614 planar graphs in total, 822 of which are not percolating, whereas
+colleges. The dataset consists in total of 1614 planar graphs, 822 of which are not percolating, whereas
 the remaining 792 are percolating. See figure~\ref{fig:expPercNonPerc} for examples of graphs that are in the dataset.
-The whole set was again partitioned in a training set ($80\%$ of the total number of graphs as above)
-and a test set ($20\%$). The nodes have their position in the unit cube as attributes, whereas the graphs do not have any attributes.
+The whole set was again partitioned in a training set ($80\%$ of the total number of graphs)
+and a test set ($20\%$). The nodes have their position in the unit cube as attributes, whereas the edges have their length as attributes.
 \begin{figure}[h]
     \centering
     \begin{subfigure}[t]{0.45\textwidth}
         \centering
+        \includegraphics[width=\textwidth]{GoalsImplementation/percolating.png}
         \caption{Percolating}
     \end{subfigure}
     \hfill
     \begin{subfigure}[t]{0.45\textwidth}
         \centering
+        \includegraphics[width=\textwidth]{GoalsImplementation/nonPercolating.png}
         \caption{Non-Percolating}
     \end{subfigure}
-    \caption{Example of graphs that are in the percolation dataset.\comment{TODO}}
+    \caption{Example of graphs that are in the dataset used for the percolation problem 
+    (here $r=0.08$, see again section~\ref{sec:intro_percolation} for an interpretation of $r$).}
     \label{fig:expPercNonPerc}
 \end{figure}

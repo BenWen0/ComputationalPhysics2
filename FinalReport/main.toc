@@ -4,13 +4,13 @@
 \contentsline {subsection}{\numberline {1.2}Introduction to Neural Networks}{3}{subsection.1.2}%
 \contentsline {subsection}{\numberline {1.3}Fundamentals of Graphs and Graph Neural Networks}{5}{subsection.1.3}%
 \contentsline {subsection}{\numberline {1.4}Percolation}{6}{subsection.1.4}%
-\contentsline {section}{\numberline {2}Goals and Implementation}{6}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Lattice Creation}{7}{subsection.2.1}%
-\contentsline {subsection}{\numberline {2.2}Implementing the GNN}{8}{subsection.2.2}%
-\contentsline {subsection}{\numberline {2.3}On the Problem of Percolation}{9}{subsection.2.3}%
-\contentsline {section}{\numberline {3}Results and Discussion}{11}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Classifying Graphs into Bravais Classes}{11}{subsection.3.1}%
-\contentsline {paragraph}{Results on the 2d dataset}{11}{paragraph*.8}%
-\contentsline {paragraph}{Results on the 3d dataset}{12}{paragraph*.11}%
-\contentsline {subsection}{\numberline {3.2}On the Problem of Percolation}{12}{subsection.3.2}%
-\contentsline {section}{\numberline {4}Conclusion and Outlook}{14}{section.4}%
+\contentsline {section}{\numberline {2}Goals and Implementation}{8}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Lattice Creation}{8}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Implementing the GNN}{9}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}On the Problem of Percolation}{10}{subsection.2.3}%
+\contentsline {section}{\numberline {3}Results and Discussion}{13}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Classifying Graphs into Bravais Classes}{13}{subsection.3.1}%
+\contentsline {paragraph}{Results on the 2d dataset}{13}{paragraph*.8}%
+\contentsline {paragraph}{Results on the 3d dataset}{15}{paragraph*.13}%
+\contentsline {subsection}{\numberline {3.2}On the Problem of Percolation}{16}{subsection.3.2}%
+\contentsline {section}{\numberline {4}Conclusion and Outlook}{20}{section.4}%

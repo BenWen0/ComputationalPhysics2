@@ -1,16 +1,17 @@
-As mentioned in~\ref{sec:implPercolation} I was asked to experiment with the TopKPooling layer. 
-However, before presenting the results on how well this layer performed, we will give an argument, why the percolation problem 
-cannot be solved by a MessagePassing GNN, no matter how clever it might be designed.
+As mentioned in~\ref{sec:implPercolation}, I was asked to experiment with the TopKPooling layer as well with message passing layers 
+to tackle the problem of classifying graphs into percolating and non-percolating. 
+However, before presenting the results on how well different mixtures of these layers performed, we will give an argument, why the percolation problem 
+cannot be solved by a pure message passing GNN, no matter how clever it might be designed.
 Suppose there is a Message Passing GNN, that can solve the percolation problem, i.e. given any graph 
-with nodes positioned inside the unit square, it can determine whether or not the graph is percolating. 
+with nodes positioned inside the unit square, it can determine whether the graph is percolating or not. 
 Now, take any graph $G$ you like and choose two nodes $n$, $m$, that are not connected by an edge (i.e. $\{n,m\}\notin E$). 
 Assign each node different from $n, m$ a position inside 
 $(r, 1-r)\times(r, 1-r)$, place node $n$ inside the strip $[0,1]\times [0,r]$ and $m$ inside $[0,1]\times[1-r, 1]$. 
 Furthermore, add the new edge $\{n,m\}$, which gives a new graph $\tilde{G}$ that has the same nodes
-as $G$ and the same edges plus the one additinal more. Next, run the GNN on the graph $\tilde{G}$. 
-Either, the GNN outputs that $\tilde{G}$ is not percolating or it outputs that $\tilde{G}$ is percolating. 
+as $G$ and the same edges plus the one additionally added. Next, run the GNN on the graph $\tilde{G}$. 
+Either the GNN outputs that $\tilde{G}$ is not percolating or it outputs that $\tilde{G}$ is percolating. 
 If the graph was percolating, the nodes $n$ and $m$ were already connected in $G$. 
-In case $\tilde{G}$ is not percolating, $n$ and $m$ are not connected in $G$. 
+In case $\tilde{G}$ was not percolating, $n$ and $m$ were not connected in $G$. 
 In total, we can use our GNN to detect, whether two randomly chosen nodes ($n$ and $m$) in a randomly 
 chosen graph ($G$) are connected via a path or not.
 However, such a GNN can clearly not exist (suppose there were such a GNN, 
@@ -39,42 +40,64 @@ Hence, a GNN that is capable of solving the percolation problem can not exist to
     \draw[very thick]  (n5) -- (n6);
 
     \end{tikzpicture}
-    \caption{No Message Paassing GNN can detect whether two nodes are in the same connected coomponent. 
+    \caption{Illustration, why no Message Passing GNN can detect whether two nodes are in the same connected component. 
     Suppose such a GNN exists and that it has $l$-layers. Consider the graph with $2l+2$ nodes depicted above. 
     Since each node can only share information with its $l$-neighrest neighbors, 
     node 0 can only share information with nodes $0,\cdots,l$
     and node $2l+1$ can only receive information from nodes $l+1,\cdots,2l+1$. 
-    Hence, there is no possibilty for node $0$ to know about node $2l+1$ and 
+    Hence, there is no possibility for node $0$ to know about node $2l+1$ and 
     therefore, the GNN cannot detect, whether they are in the same connected component or not.}
     \label{fig:gnn_connectedComponent}
 \end{figure}
-Besides beeing provable impossible to solve this problem, I was asked to present some training processes nonetheless. 
-The resulst can be seen in figure~\ref{fig:trainingPerc}. Unsurprisingly, the GNN was not able to solve the percolation problem.
-\begin{figure}
+Besides being impossible to solve this problem with message passing layers, we were asked to present a training process nonetheless. 
+The results can be found in figure~\ref{fig:trainingPerc}. 
+The model used the settings $d_m, d_u, w_m, w_u$ that were found out do work best in the Bravais class classification as well as the same hyperparameters, 
+but with 10 message passing layers instead of just 2 (it seemed reasonable to use a deeper GNN for this task). 
+Unsurprisingly, the GNN was not able to solve the percolation problem. 
+The accuracy seemingly fluctuates at random between $65\%$ and $75\%$. One might expect to have an accuracy of about $50\%$. 
+However, there are graphs which can be immediately classified into percolating and non-percolating, without even looking for cycles. 
+To give an example, consider a graph that does not have any edge between a node on the left side and a node on the right side of the unit square
+(or a node on the bottom and one on the top). Detecting if such an edge exits is just a matter of measuring lengths of edges, which is easily done,
+because each edge is already attributed with its length. 
+Furthermore, as the GNN is relatively deep, it is possible, that the network indeed learned to detect percolating graphs, but only when the occurring cycles
+have a length that is less than the GNNs depth.
+\begin{figure}[h]
     \centering
-    \caption{bla bla bla}
+    \includegraphics[width=0.7\textwidth]{Discussion/plots/percNoPooling.png}
+    \caption{Training of a pure message passing GNN on the percolation problem.}
     \label{fig:trainingPerc}
 \end{figure}
 
-As we cannot hope to overcome the percolation problem with pure message passing layers, 
-a natural idea is to try using layers that do not depend in message passing. 
-That is the reason why I was asked work with the TopKPooling-Layer.
-However, there is a good reason, why, even with the TopKPolling, we cannot hope to achieve 
+As we cannot hope to solve the percolation problem with pure message passing layers, 
+a natural idea is to try using layers that do not depend on message passing. 
+Furthermore, we learned from figure~\ref{fig:gnn_connectedComponent} that the problem lies 
+in graphs that are \glqq{}too long\grqq{}, or, putting it differently, that have too many nodes.
+Hence, we are looking for layers, that reduce the number of nodes and do not depend on message passing.
+That is the reason why we were asked work with TopKPooling layers.
+However, there is a good reason, why, even with TopKPooling, we cannot hope to achieve 
 anything better than in~\ref{fig:trainingPerc}.
 Recall, that the TopKPooling procedure deletes nodes with all its edges and does not create new edges. 
-In particular, it does not presever connected components. To illistrate the point a bit more, 
-consider the follwoing situation: Suppose there is a percolating graph $G$. 
-After going through the TopKPolling layer some node might be deletet, 
+In particular, it does not preserve connected components. To illustrate the point a bit more, 
+consider the following situation: Suppose there is a percolating graph $G$. 
+After going through the TopKPooling layer some nodes might be deleted, 
 so that the resulting graph is not percolating anymore. 
-Hence, instead of looking at Pooling layers that do not respect cnnected components, we have to look 
+Hence, instead of looking at pooling layers that do not respect connected components, we have to look 
 at pooling layers, that preserve connected components.
-Depsite beeing a interesting challenge, this goes beyond the scope of this project.
-Hence, a TopKPolling layer will not help with the percolatino problem. 
-Nonetheless, I was again asked to present some training results. They can be found in figure~\ref{fig:resTopK}. 
-As expected, the training does not show any improvements compared to figure~\ref{fig:trainingPerc}.
-\begin{figure}
+Despite being an interesting challenge, this goes beyond the scope of this project.
+However, there are promising approaches and already existing pooling layers, that preserve structures to some extent (for an overview, see for example~\cite{poolingInGNNs}).
+Unfortunately, these layers are not yet implemented in PyG and implementing these layers goes well beyond this project.
+To conclude, TopKPooling layers will not help with the percolation problem. 
+Nonetheless, we were again asked to present some training results. We used the same model as above 
+with the same hyperparameters but introduced a TopKPooling layer after the first message passing layer.
+The TopKPooling layer was configured so that it reduced the number of nodes by $50\%$.  
+The training results can be found in figure~\ref{fig:resTopK}.
+As first sight, the training seems a bit more stable than without the TopKPooling layer. 
+However, the random fluctuations between $65\%$ and $75\%$ are still present. 
+Overall, the training does not show any improvements regarding the accuracy compared to figure~\ref{fig:trainingPerc}.
+\begin{figure}[h]
     \centering
-    \caption{bla bla bla}
+    \includegraphics[width=0.7\textwidth]{Discussion/plots/percPooling.png}
+    \caption{Training of a message passing GNN additionally equipped with a TopKPooling layer on the percolation problem.}
     \label{fig:resTopK}
 \end{figure}
  

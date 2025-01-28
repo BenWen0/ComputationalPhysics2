@@ -1,39 +1,47 @@
 \label{sec:implGNNBravais}
-Once we have a good amount of training data at hand, we need to determine the optimal structure of the GNN. 
-This amounts to finding the right functions $\phi_{upd},\phi_{mes},\phi_{agg}$ in equation~\ref{eq:mess_pass}, 
+Once we have a sufficient amount of training data at hand, we need to determine the optimal structure of the GNN as well as
+a suitable training procedure. 
+This amounts to finding the right functions $\phi_{upd},\phi_{mes},\phi_{agg}$ (cf. equation~\ref{eq:mess_pass}) 
 and proper number of message passing layers. More than that, one has to decide, which edge-/node-features 
-do best, as well as which hyperparamters to use during training.
+do best, as well as which hyperparameters and loss function to use during training.
 
-As we do not have many computatinoal resources available, we were unable to vary all of these parameters.
-We fixed the hyperparamters as well as the node-/edge features as follows: Both in the 2d and in the 3d case
-the each $e_{n,m}$ between nodes $n,m$ has the difference of the positions of nodes $n$ and $m$ as edge feature.
-The nodes $n$ and $m$ do not carry any specific node feature. Each node got the number one assigned as 
+As we do not have extensive computational resources available, we were unable to vary all of these parameters.
+We fixed the hyperparameters, the loss function as well as the node-/edge features as follows: 
+Both in the 2d and in the 3d case the edge ${n,m}$ between nodes $n$ and $m$ 
+carries the difference of the positions of nodes $n$ and $m$ as edge feature $e_{n,m}$.
+The nodes $n$ and $m$ do not carry any specific node feature. Each node got the number 1 assigned as 
 a feature, i.e. there are basically no node features.
-For training the GNN, the standard NAdam optimizer with all its standard settings was used. Each training consisted 
-of 30 epochs with a batch size of 32.
+For training the GNN, the standard NAdam optimizer with all its standard settings implemented in the PyTorch library was used.
+In particular, the standard setting for the learning rate is $\eta=0.002$.
+Each training consisted of 30 epochs. The training datasets were split in batches of size 32.
+Since we are interested in classification tasks, we one-hot encoded the Bravais classes and used cross entropy loss as our loss function.
 
-All other paramters mentioned at the beginning of this section were varied in the following way:
-In all the following experiments, for computational convenience, $\phi_{agg}$ was chosen to be the function that sums up all its inputs.
+Furthermore, in all the following experiments, we fixed $\phi_{agg}$ to be the function that sums up all its inputs.
+All other parameters mentioned at the beginning of this section were varied in the following way:
 The function $\phi_{mes}$ was implemented as a general feed forward neural network (cf. section~\ref{sec:intro_nn}) with 
-depth $d_m$ and uniform width $w_m$. By depth we mean the number of hidden layers and by uniform width we mean the number of nodes
+depth $d_m$ and uniform width $w_m$. By depth, we mean the number of hidden layers and by uniform width we mean the number of nodes
 in each hidden layer, which was chosen to be uniform over all hidden layers.
 Likewise, the function $\phi_{upd}$ was taken to be a general feed forward neural network width depth $d_u$ and uniform width $w_u$.
-In principle, as mentioned above, there is a fith parameter that needs to be optimized, namely the number $d_G$ of message
-passing layers. However, five paramters are computatinoally to expensive to handle. Therefore,
+In principle, as mentioned above, there is a fifth parameter that needs to be optimized, namely the number $d_G$ of message
+passing layers. However, five parameters are computationally too expensive to handle. Therefore,
 all further experiments were conducted with $d_G=2$. Via grid search, we looked through all possible combinations
 of $d_m,w_m,d_u,w_u$ in the following ranges
-\begin{align*}
-    d_m&\in\{1, 2, 3\} \\
-    w_m&\in\{10, 20, 30\} \\
-    d_u&\in\{1,2\} \\
-    w_u&\in\{5, 10\}.   
-\end{align*}
+\begin{align}
+    d_m&\in\{1, 2, 3\}, \label{eq:list_settings_start} \\
+    w_m&\in\{10, 20, 30\} ,\\
+    d_u&\in\{1,2\}, \\
+    w_u&\in\{5, 10\}.  
+    \label{eq:list_settings_stop} 
+\end{align}
 In total, this amounts to finding an optimum within 36 parameters. Once we found an optimum on the 2d dataset, we used
-these optimal settings and trained on the 3d dataset. The question we are trying to answer, is whether the settings that did best
-in the 2d case also work in the 3d case.
+these optimal settings and trained on the 3d dataset. 
+There are to question we are aiming to answer: First, can we find any correlations between
+the widths and depths of our GNN and the training accuracy. 
+Second, whether the settings that did best in the 2d case also lead to good results in the 3d case.
 
-A few words on the actual implementation: Luckily, one does not have to implement the whole message passing scheme. Instead,
-the PyG-package (\cite{PyG}) comes equipped with a base class called MessagePassing. This class in build in a way such that
+A few words on the actual implementation: The implementation is based on PyTorch and PyTorch Geometric (abbreviated PyG), see \cite{PyTorch} and \cite{PyG}. 
+Luckily, one does not have to implement the whole message passing scheme.
+Instead, the PyG-package is equipped with a base class called MessagePassing. This class is build in a way such that
 the function $\phi_{upd},\phi_{mes},\phi_{agg}$ can be freely implemented and everything else works under the hood. 
-Hence, it is sufficient to state how these three functinos were implemented. It is not necessary to go into 
-detail about the implemetation of the whole message passing scheme.  
+Hence, it is sufficient to state how these three functions were implemented. It is not necessary to go into 
+detail about the  implementation of the whole message passing scheme.

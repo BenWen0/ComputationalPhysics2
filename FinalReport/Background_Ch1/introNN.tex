@@ -1,6 +1,6 @@
-Stating a precise definition of \grqq{}Neural Network\glqq{} is quite involved. 
+Stating a precise definition of \glqq{}Neural Network\grqq{} is quite involved. 
 Hence, we will only speak about the most fundamental type of neural networks, the so-called feed forward neural networks. 
-Even for these simple networks, a precise definition is a bit lengthy. We have to introduce some notation first:
+Even for these simple networks, a precise definition is rather lengthy. We have to introduce some notation first:
 Let $l\in\N_{\geq2}$, $n_0,n_1\dots,n_l\in\N$ and for each $i\in\N, i\leq l$ 
 choose an affine linear map $T^{(i)}:\R^{n_{i-1}}\to\R^{n_i}$ and a smooth map $a^{(i)}:\R\to\R$.
 Denoting with $f^{(i)}:\R^{n_i}\to\R^{n_i}$ the function acting element wise by $a^{(i)}$ (i.e $f^{(i)}(x_1, \dots, x_{n_i})=(a^{(i)}(x_1),\dots, a^{(i)}(x_{n_i}))$), 
@@ -12,7 +12,8 @@ Recall that for any affine linear map $L:\R^n\to\R^m$ there exist $b\in\R^m$ and
 $Lx=W^Tx+b$ for all $x\in\R^n$ (the transposition is just for our convenience later on). Hence, to each $T^{(i)}$ corresponds a matrix $W^{(i)}\in\text{Mat}(n_{i-1}\times n_i,\R)$ called the weight-matrix and a vector
 $b^{(i)}\in\R^{n_i}$ called bias such that $T^{(i)}x=\left(W^{(i)}\right)^Tx + b^{(i)}$.
 We introduce further notation: Obviously, we can think of $W^{(i)}$ as an element in $\R^{n_{i-1}n_i}$. 
-Let $\theta=(W^{(1)},b^{(1)},\dots,W^{(l)},b^{(l)})\in\R^{n_0n_1}\times\R^{n_0}\times\dots\times\R^{n_{l-1}n_l}\times\R^{l}$. Clearly, $\tilde{F}$ depends on the choice of $T^{(l)}$ and hence of the choice of $\theta$. 
+Let $\theta=(W^{(1)},b^{(1)},\dots,W^{(l)},b^{(l)})\in\R^{n_0n_1}\times\R^{n_0}\times\dots\times\R^{n_{l-1}n_l}\times\R^{l}$. 
+Clearly, $\tilde{F}$ depends on the choice of $T^{(l)}$ and hence on the choice of $\theta$. 
 Correspondingly, for each such $\theta$ we can build a map $\tilde{F}=F_\theta$.
 With this notation in mind, we are ready to define what a neural network should be: The map
 \begin{equation*}
@@ -22,10 +23,11 @@ is called (feed forward) neural network with $l$ layers and activation function 
 
 Though this definition might seem technical, it bears a visual explanation:
 It is best explained with figure~\ref{fig:nn}. We can view $F_\theta:\R^{n_0}\to\R^{n_l}$ as a graph-like structure. Each coordinate $x_i$ 
-of an input vector $x\in\R^{n_0}$ can be thought if as a node. Applying $f^{(1)}\circ T^{(2)}$ to $x$ yields a
+of an input vector $x\in\R^{n_0}$ can be thought of as a node. Applying $f^{(1)}\circ T^{(2)}$ to $x$ yields a
 new vector $y^1=f^{(1)}\circ T^{(2)}(x)\in\R^{n_1}$. The coordinates of $y^1$ can again be interpreted as nodes. All these nodes (coordinates) together constitute the new layer
 of the network. Applying $f^{(2)}\circ T^{(2)}$ to $y^1$ yields a new layer $y_2$ and so on. The last layer $y^{(l)}$ is then given by $F_\theta(x)$.
-Going from layer $i-1$ to the layer $i$ can be visualized as follows: According to the above definitinos we have
+Going from layer $i-1$ to the layer $i$ can be visualized as follows: 
+According to the above definitions we have
 \begin{align*}
     y^{i}_j&=a^{(i)}\left(T^{(i)}\left(y^{i-1}\right)\right)_j\\
     &=a^{(i)}\left(\sum_{k=1}^{n_{i-1}}\left(W^{(i)}\right)^T_{jk}y^{i-1}_k+b^{(i)}_j\right)\\
@@ -170,13 +172,13 @@ We picture an edge from node $y^{i-1}_k$ to node $y^i_j$ which has the weight $W
         \draw[-, thick, gray]  (7_4) -- (8_2);
         \draw[-, thick, gray]  (7_4) -- (8_3);
     \end{tikzpicture}
-    \caption{Visualization of a feed forward neural network. \comment{warum können nicht einfach alle nodes gleich groß sein?!}}
+    \caption{Visualization of a feed forward neural network.}
     \label{fig:nn}
 \end{figure}
 
 With the visuals in mind, we can explain what neural networks are used for and how they are being used. 
-The purpose of neural network lies in the  approximation of unknown functions. 
-Suppose we were given a function $G:\R^n\to\R^m$ from which we only know the values at $D$-many ($D\in\N$) points $x_1,\dots,x_D\in\R^n$, 
+The purpose of neural networks lies in the  approximation of unknown functions. 
+Suppose we were given a function $G:\R^n\to\R^m$ from which we only know values at $D$-many ($D\in\N$) points $x_1,\dots,x_D\in\R^n$, 
 i.e. only the values $y_1=G(x_1),\dots,y_D=G(x_D)$ are known.
 Choose $l\in\N$, set $n_0=n$, $n_l=m$ and consider the neural network
 \begin{equation*}
@@ -184,13 +186,19 @@ Choose $l\in\N$, set $n_0=n$, $n_l=m$ and consider the neural network
 \end{equation*}
 We can then try to find an \glqq{}optimal\grqq{} $\theta$ such that $F_\theta\approx G$. 
 To do so, we have to introduce a measure for how much $F_\theta$ differs from $G$. 
-This is commonly called a cost functions, i.e. a function $C:\R^m\times\R^m\to\R$, that maps to a pair $(F_\theta(x_i), y_i)$ a real value
+This is commonly called a cost/loss function, i.e. a function $C:\R^m\times\R^m\to\R$, that maps to a pair $(F_\theta(x_i), y_i)$ a real value
 $C(F_\theta(x_i),y_i)$ that can be interpreted as a distance between the true value $y_i$ and the predicted value $F_\theta(x_i)$.
 Finding an optimal $\theta$ is achieved by minimizing the map $\theta\to C(F_\theta(x_i),y_i)$ for all $i=1,\dots,D$.
 This optimization is called \glqq{}training the neural network\grqq{}. 
-There is a whole theory about optimization of real valued functions. A common way to do this by means of the gradient descent method.
+There is a whole branch of mathematics about these kinds of optimization of problems. 
+A common way to do this is by means of the gradient descent method.
 Roughly speaking, the idea is the following: Calculate the gradient of the map $\theta\mapsto C(F_\theta(x_i),y_i)$ for a fixed $i=1,\dots,D$, 
 and then change $\theta$ slightly in the opposite direction of the gradient. 
-As $F_\theta$ is a large composition, computing basically comes down to repeated application of the chain rule. 
+How much $\theta$ is changed, depends on the so-called learning rate $\eta\in\R_+$. 
+As $F_\theta$ is a large composition, computing the gradient basically comes down to repeated application of the chain rule. 
 An efficient algorithm that does exactly this and is widely used is called backpropagation. We can repeat this step until we found a $\theta$ such that 
 $C(F\theta(x_i),y_i)$ is sufficiently small for all $i=1,\dots,d$.
+
+Furthermore, there are many more techniques and tools (like optimizers, batching, ...) to make the training more efficient, faster converging and less time-consuming. 
+However, this section was intended to give only a rough overview. Hence, we will not go into more detail. 
+For additional information, there is a vast amount of literature on these topics, see for example \cite{bookNN1}, \cite{bookNN2} and \cite{paperHyperparameter}.
