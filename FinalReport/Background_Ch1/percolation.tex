@@ -7,16 +7,16 @@ A path $(m_0,m_1,...,m_N)$ is called a cycle if $m_0=m_N$ and $m_i\neq m_j$ for 
 
 Knowing what paths and cycles are, everything is set up to define what a percolating graph is. 
 Suppose $G=(V,E)$ is an undirected graph, where each node $n\in V$ has a position 
-$p_n=(n_x,n_y)\in[0,1]\times[0,1]$. Visually, we think of $G$ as a graph inside the unit square.
-Fix $0<r<\frac{1}{2}$. The graph is called percolating, if there are nodes $n,m\in V$ such that
+$(n_x,n_y)\in[0,1]\times[0,1]$. Visually, we think of $G$ as a graph inside the unit square.
+Fix $0<r<\frac{1}{2}$. The graph $G$ is called percolating, if there are nodes $n,m\in V$ such that
 \begin{enumerate}
     \item there is a cycle containing $n$ and $m$,
-    \item $\{n,m\}\in E$ and
+    \item $n$ and $m$ are connected by an edge, i.e. $\{n,m\}\in E$,
     \item either $n_x<r$ and $m_x>1-r$ or $n_y<r$ and $m_y>1-r$.
 \end{enumerate}
 Figure~\ref{fig:percolation_example} gives an example of percolating and non-percolating graphs. 
 Properties 1. and 2. are easily understood. It is worth mentioning, that 1. and 2. imply, that there is a cycle containing $n$,$m$ as well as the edge $\{n,m\}$.
-Property 3. needs a bit more explanation: We can picture small trips of width $r$ at the sides of the unit square 
+Property 3. needs a bit more explanation: We can picture small strips of width $r$ at the sides of the unit square 
 (see figure~\ref{fig:percolation_example} where the strips are colored red and blue). 
 Requiring $n_x<r$ and $m_x>1-r$ means that $n$ is located in the strip on the left side of the unit square while
 $m$ is located in the strip on the right side. 

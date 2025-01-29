@@ -9,19 +9,20 @@ Choose $a,b\in\R_+$, $\phi\in(0,\pi)$ and set
 $e_x=(0,a)^T$ as well as $e_y=(b\cos(\phi), b\sin(\phi))^T$ (see figure~\ref{fig:bravais2D} for a visualization of $a,b$ and $\theta$). 
 Then, the set $\tilde{\Omega}=\Z e_x\times\Z e_y\subset\R^2$ is a two-dimensional lattice.
 As mentioned, we only work with finite subsets of $\tilde{\Omega}$. Hence, we choose $N_x,N_y\in\N$ and set $\Omega=\N_{\leq N_x}e_x\times\N_{\leq N_y}e_y\subset\tilde{\Omega}$.
-This lattice now has $N_xN_y$ elements.
+Now, this lattice has $N_xN_y$ elements.
 Next, we add some noise to the elements in $\Omega$ and restrict their coordinates to a certain range. For this instance, let $\mu,\sigma,s\in\R_+$. Firstly, draw random samples from
 a normal distribution with mean value $\mu$ and standard deviation $\sigma$. Secondly, we scale these random numbers by the factor $s$ 
-and add the scaled noise to all elements in $\Omega$ (component-wise, i.e. add noise to the first coordinate of the elements in $\Omega$ as well as to the second coordinate).
+and add the scaled noise to all elements in $\Omega$ (coordinate-wise, i.e. add noise to the first coordinate of the elements in $\Omega$ as well as to the second coordinate).
 Restricting all coordinates to a certain range is easily done. Let $x_{max}, y_{max}\in\R_+$ and replace each $(x,y)\in\Omega$ with $(x \mod x_{max}, y \mod y_{max})$ 
 Next, we want to turn our lattice $\Omega$ into a graph $(V,E)$. Obviously, we can set $V=\Omega$ and what remains is the choice of edges. For this, we take $r\in\R_+$ and set
 \begin{equation*}
     E=\{(v, w)\in V\times V: \norm{v-w}<r\},
 \end{equation*}
 where $\norm{\cdot}$ denotes the standard norm in $R^d$, i.e. nodes that are close together will be connected.
+As $\norm{v-w}=\norm{w-v}$, the graph $(V,E)$ is undirected.
 Lastly, we choose $p_n,p_e\in[0,1]$ and randomly delete nodes with probability $p_n$ (and edges with probability $p_e$ respectively).
 This step finishes the creation of 2d lattices with artificial artifacts.
-The creation of three-dimensional lattices is completely analogously. The only difference is that we have to pick three basis vectors $e_x,e_y,e_z$ which have length $a,b,c\in\R_+$ and 
+The creation of three-dimensional lattices goes analogously. The only difference is that we have to pick three basis vectors $e_x,e_y,e_z$ which have length $a,b,c\in\R_+$ and 
 enclose angles $\phi=\angle(e_x, e_y),\,\psi=\angle(e_x,e_z),\,\chi=\angle(e_y,e_z)$. 
 As an example, figure~\ref{fig:examplesLattices} shows two different lattices created by this scheme.
 
@@ -50,16 +51,16 @@ Furthermore, recall that some Bravais classes require $\theta=\frac{\pi}{2}$. In
 in the range $(0.99\frac{\pi}{2}, 1.01\frac{\pi}{2})$.
 Accordingly, when the side lengths are required to fulfill $a=b$, we allow for deviations of $1\%$, 
 i.e. such that $0.99\leq\frac{a}{b}\leq1.01$.
-Furthermore, we set the minimal side length to be 0.1 and the maximal side length to be 10. 
+Furthermore, we set the minimal side length to be 0.1 and the maximal side length to 10. 
 The parameters $\sigma,\mu$ and $s$ determining the above-mentioned Gaussian noise were chosen to be $\sigma=0.5$ and $\mu=0$. The amplitude $s$ of
-the noise in x-direction was taken to be $s=0.07a$ (depending on the side-length $a$) as well as $s=0.07b$
+the noise was taken to be $s=0.07a$ in x-direction (depending on the side-length $a$) as well as $s=0.07b$
 in y-direction. Next, we restricted all coordinates to the range $(x_{max},y_{max})=(N_xa,N_yb)=(10a,10b)$.
 The probabilities $p_n,p_e$ for randomly dropping nodes/edges were taken to be $p_n=p_e=0.01$.
 According to these settings, we created 10000 graphs per Bravais class. Since there are 5 Bravais classes in total, the
 2d-dataset consists of 50000 graphs, $20\%$ were taken to be the test set and the remaining $80\%$ constitute the training set.
 
-Creating the 3d-dataset completely goes the same way. The noise, the maximal side-lengths as well as the probability
-for removing nodes and edges was chosen identically. In order to obtain roughly the same number of nodes per graph as in the 2d case,
+Creating the 3d-dataset completely goes the same way. The noise, the maximal side-lengths as well as the probabilities
+for removing nodes and edges were chosen identically. In order to obtain roughly the same number of nodes per graph as in the 2d case,
 we chose $N_x=N_y=N_z=5$, which leads to 125 nodes per graph.
 The only difference between the 2d- and the 3d-dataset lies in the number of graphs per Bravais class. We were aiming
 for the same total number of graphs (50000), but, in contrast to the 2d case, we now have 14 Bravais classes.

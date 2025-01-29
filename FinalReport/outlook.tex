@@ -1,18 +1,18 @@
 At this point, we presented all our results and want to reiterate what the 
-goals of this project were, which goals we succesfully accomoplished and which 
+goals of this project were, which goals we successfully accomplished and which 
 problems we could not solve.
 The primary goal was to get familiar with Graph Neural Networks. 
-We succesfully programmed and trained GNNs, understood how message passing works, so that we definitely can say, we took our 
-first steps into the GNN-world. Secondly, we wanted build a GNN capable of assigning 2-dimensional and
+We successfully programmed and trained GNNs, understood how message passing works, so that we definitely can say, we took our 
+first steps into the GNN-world. Secondly, we wanted to build a GNN capable of assigning 2-dimensional and
 3-dimensional lattices their Bravais class. We build a GNN that can solve this task with an accuracy of $95\%$, both in 2d and in 3d.
-Furthermore, we invastigated the influence of different settings in the message passing procedure. 
-The third goal, was to build a GNN than can detect percolation. This problem has not been solved.
-We learned, that there are fundamental limitations of GNNs that only rely on message passing.
+Furthermore, we investigated the influence of different settings in the message passing procedure. 
+The third goal, was to build a GNN than can detect percolation. This problem could not be solved.
+We learned, that there are fundamental limitations of message passing GNNs, like detecting whether two nodes are in the same connected component.
 
 What can be done next? 
 Clearly, for the Bravais classification task one can try to vary node and edge features and try out different training procedures.
 However, the more interesting part is probably the percolation problem and related tasks. We already tried to overcome the
-limitations of message passing layers with the usage of a TopKPooling layer. However, this layer is not suitable
+limitations of message passing layers with the usage of a Top-K Pooling layer. However, this layer is not suitable
 for the problem at hand. But we have seen that there are layers which might be more suitable. 
 Implementing these layers would be a very interesting future challenge.
 

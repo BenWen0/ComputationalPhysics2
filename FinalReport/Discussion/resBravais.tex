@@ -1,7 +1,7 @@
-At first, we start by analyzing the results of the training on the 2d-dataset and then go on to the 3d case.
+At first, we start by analyzing the results of the training on the 2d-dataset and then continue with the 3d case.
 
-\paragraph{Results on the 2d dataset}
-As mentioned in section~\ref{sec:implGNNBravais} we tested in total 36 different models, each with a unique combination of values $d_m,w_m,d_u,m_u$.
+\paragraph{Results for training on the 2d dataset}
+As mentioned in section~\ref{sec:implGNNBravais} we tested in total 36 different models, each with a unique combination of values $d_m,w_m,d_u,w_u$.
 For better statistics, each model was trained five times in a row.
 All training curves shown below are the averages of these five individual trainings.
 Before going into detail which combination led to the best results, we start 
@@ -34,7 +34,7 @@ only managed to get about $70\%$ accuracy. The training process of both of these
     \caption{Performance of models with the highest, respectively lowest, accuracy.}
     \label{fig:bravais2dBestWorst}    
 \end{figure}
-Hence, different values for $d_m,w_m,d_u,m_u$ may lead to drastically different outcomes. 
+Hence, different values for $d_m,w_m,d_u,w_u$ may lead to drastically different outcomes. 
 
 Now that we have a rough overview, we are going to take a closer look at possible 
 correlations between different combinations and their resulting performance.
@@ -47,7 +47,7 @@ The x-axis takes care of the parameter $w_m$, the y-axis shows $w_u$.
 To each specific combination $(w_m,w_u)$ there are six possible combinations of the remaining parameters $(d_m,d_u)$, 
 namely $(d_m,d_u)\in\{(1,1),(1,2),(2,1),(2,2),(3,1),(3,2)\}$ 
 (recall all possible settings from equations~\ref{eq:list_settings_start}-\ref{eq:list_settings_stop}).
-Each of these six combinations is shown as an individual point inside an rectangle centered at the location $(w_m,w_u)$.
+Each of these six combinations is shown as an individual point inside a rectangle centered at the location $(w_m,w_u)$.
 The points are then colored according to the test accuracy of the model they represent. 
 Note that only points with an accuracy above $80\%$ are shown.
 \begin{figure}[h]
@@ -58,8 +58,7 @@ Note that only points with an accuracy above $80\%$ are shown.
     Each point corresponds to one specific setting $(d_m,w_m,d_u,m_u)$. Points inside the same rectangle have the same $(w_m,w_u)$-setting
     and differ in the $(d_m,d_u)$-setting. Which position inside the rectangle corresponds to which $(d_m,d_u)$-setting, can be seen by 
     the rectangle on the right-hand side of the plot. The color of each point encodes the test accuracy. Note, that only points with
-    an accuracy above $80\%$ are shown (otherwise, the color map would be too dense and details would no longer be distinguishable). 
-    Hence, missing points can be considered as very bad performing models.}
+    an accuracy above $80\%$ are shown (otherwise, the color map would be too dense and details would no longer be distinguishable). }
     \label{fig:wu_vs_wm}
 \end{figure}
 Based on figure~\ref{fig:wu_vs_wm} we can draw conclusions about the impact of the parameters $w_m,w_u$ on the accuracy of the model.
@@ -77,7 +76,7 @@ Much more statistics and data is needed to really substantiate this claim.
 Next, we want to investigate the relation between the width $w_u$ and the depth $d_u$.
 To this end, we consider the same type of visualization as in figure~\ref{fig:wu_vs_wm}. The result can be found
 in figure~\ref{fig:wu_vs_du}. Keep in mind, that figure~\ref{fig:wu_vs_du} does not provide any additional information
-that figure~\ref{fig:wu_vs_wm} would not carry as well. It is just a matter of visualizations, that makes finding patterns
+that figure~\ref{fig:wu_vs_wm} would not carry as well. It is just a matter of visualization, that makes finding patterns
 easier for us.
 \begin{figure}[h]
     \centering
@@ -128,7 +127,7 @@ to find any more interesting patterns.
 %    \label{fig:remainingParams}    
 %\end{figure}
 
-\paragraph{Results on the 3d dataset}
+\paragraph{Results for training on the 3d dataset}
 As mentioned in section~\ref{sec:implGNNBravais} we chose the model that 
 performed best in the 2d case and tested in on the 3d dataset. 
 According to the last paragraph, the settings $(d_m,w_m,d_u,w_u)=(2, 30, 1, 10)$ led to the best results 
@@ -142,8 +141,8 @@ As in the 2d case, we trained the model five times in a row and averaged over th
     \label{fig:bravaisBest3d}
 \end{figure}
 We can conclude, that the best performing model in the 2d case did very well in the 3d case too.
-Out of interest, we trained to worst performing model (in the 2d case) on the 3d dataset too.
-Interestingly, it performed equally bad (see figure~\ref{fig:bravaisWorst3d}) and just reached an accuracy of $75\%$.
+Out of interest, we trained the worst performing model (in the 2d case) on the 3d dataset too.
+Interestingly, it performed equally bad (see figure~\ref{fig:bravaisWorst3d}) and just reached an accuracy of $74\%$.
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.7\textwidth]{Discussion/plots/bravais3dWorst.png}

@@ -1,7 +1,7 @@
-As mentioned in~\ref{sec:implPercolation}, I was asked to experiment with the Top-K Pooling layer as well with message passing layers 
-to tackle the problem of classifying graphs into percolating and non-percolating. 
+As mentioned in~\ref{sec:implPercolation}, we were asked to experiment with the Top-K Pooling layer as well with message passing layers 
+to tackle the problem of classifying graphs into percolating and non-percolating ones. 
 However, before presenting the results on how well different mixtures of these layers performed, we will give an argument, why the percolation problem 
-cannot be solved by a pure message passing GNN, no matter how clever it might be designed.
+cannot be solved completely by a pure message passing GNN, no matter how clever it might be designed.
 Suppose there is a Message Passing GNN, that can solve the percolation problem, i.e. given any graph 
 with nodes positioned inside the unit square, it can determine whether the graph is percolating or not. 
 Now, take any graph $G$ you like and choose two nodes $n$, $m$, that are not connected by an edge (i.e. $\{n,m\}\notin E$). 
@@ -55,9 +55,11 @@ The model used the settings $d_m, d_u, w_m, w_u$ that were found out do work bes
 but with 10 message passing layers instead of just 2 (it seemed reasonable to use a deeper GNN for this task). 
 Unsurprisingly, the GNN was not able to solve the percolation problem. 
 The accuracy seemingly fluctuates at random between $65\%$ and $75\%$. One might expect to have an accuracy of about $50\%$. 
-However, there are graphs which can be immediately classified into percolating and non-percolating, without even looking for cycles. 
+However, there are graphs which can be fairly easy classified into percolating and non-percolating. 
 To give an example, consider a graph that does not have any edge between a node on the left side and a node on the right side of the unit square
-(or a node on the bottom and one on the top). Detecting if such an edge exits is just a matter of measuring lengths of edges, which is easily done,
+(or a node on the bottom and one on the top). By definition, this graph cannot be percolating. 
+In this case, the GNN just have to detect, whether such an edge exists or not.
+Detecting if such an edge exits is just a matter of measuring lengths of edges, which is easily done,
 because each edge is already attributed with its length. 
 Furthermore, as the GNN is relatively deep, it is possible, that the network indeed learned to detect percolating graphs, but only when the occurring cycles
 have a length that is less than the GNNs depth.
@@ -73,9 +75,9 @@ a natural idea is to try using layers that do not depend on message passing.
 Furthermore, we learned from figure~\ref{fig:gnn_connectedComponent} that the problem lies 
 in graphs that are \glqq{}too long\grqq{}, or, putting it differently, that have too many nodes.
 Hence, we are looking for layers, that reduce the number of nodes and do not depend on message passing.
-That is the reason why we were asked work with Top-K Pooling layers.
+That is the reason why we were asked to work with Top-K Pooling layers.
 However, there is a good reason, why, even with Top-K Pooling, we cannot hope to achieve 
-anything better than in~\ref{fig:trainingPerc}.
+anything better than in figure~\ref{fig:trainingPerc}.
 Recall, that the Top-K Pooling procedure deletes nodes with all its edges and does not create new edges. 
 In particular, it does not preserve connected components. To illustrate the point a bit more, 
 consider the following situation: Suppose there is a percolating graph $G$. 
@@ -91,7 +93,7 @@ Nonetheless, we were again asked to present some training results. We used the s
 with the same hyperparameters but introduced a Top-K Pooling layer after the first message passing layer.
 The Top-K Pooling layer was configured so that it reduced the number of nodes by $50\%$.  
 The training results can be found in figure~\ref{fig:resTopK}.
-As first sight, the training seems a bit more stable than without the Top-K Pooling layer. 
+At a first sight, the training seems a bit more stable than without the Top-K Pooling layer. 
 However, the random fluctuations between $65\%$ and $75\%$ are still present. 
 Overall, the training does not show any improvements regarding the accuracy compared to figure~\ref{fig:trainingPerc}.
 \begin{figure}[h]

@@ -12,20 +12,20 @@ Recall that for any affine linear map $L:\R^n\to\R^m$ there exist $b\in\R^m$ and
 $Lx=W^Tx+b$ for all $x\in\R^n$ (the transposition is just for our convenience later on). Hence, to each $T^{(i)}$ corresponds a matrix $W^{(i)}\in\text{Mat}(n_{i-1}\times n_i,\R)$ called the weight-matrix and a vector
 $b^{(i)}\in\R^{n_i}$ called bias such that $T^{(i)}x=\left(W^{(i)}\right)^Tx + b^{(i)}$.
 We introduce further notation: Obviously, we can think of $W^{(i)}$ as an element in $\R^{n_{i-1}n_i}$. 
-Let $\theta=(W^{(1)},b^{(1)},\dots,W^{(l)},b^{(l)})\in\R^{n_0n_1}\times\R^{n_0}\times\dots\times\R^{n_{l-1}n_l}\times\R^{l}$. 
+Let $\theta=(W^{(1)},b^{(1)},\dots,W^{(l)},b^{(l)})\in\R^{n_0n_1}\times\R^{n_1}\times\dots\times\R^{n_{l-1}n_l}\times\R^{l}$. 
 Clearly, $\tilde{F}$ depends on the choice of $T^{(l)}$ and hence on the choice of $\theta$. 
 Correspondingly, for each such $\theta$ we can build a map $\tilde{F}=F_\theta$.
 With this notation in mind, we are ready to define what a neural network should be: The map
 \begin{equation*}
-    F:\R^{n_0n_1}\times\R^{n_0}\times\dots\times\R^{n_{l-1}n_l}\times\R^{n_l}\to C(\R^{n_0},\R^{n_l}), \quad\theta\mapsto F_\theta
+    F:\R^{n_0n_1}\times\R^{n_1}\times\dots\times\R^{n_{l-1}n_l}\times\R^{n_l}\to C(\R^{n_0},\R^{n_l}), \quad\theta\mapsto F_\theta
 \end{equation*}
 is called (feed forward) neural network with $l$ layers and activation function $a^{(i)}$ in layer $i$.
 
 Though this definition might seem technical, it bears a visual explanation:
 It is best explained with figure~\ref{fig:nn}. We can view $F_\theta:\R^{n_0}\to\R^{n_l}$ as a graph-like structure. Each coordinate $x_i$ 
-of an input vector $x\in\R^{n_0}$ can be thought of as a node. Applying $f^{(1)}\circ T^{(2)}$ to $x$ yields a
-new vector $y^1=f^{(1)}\circ T^{(2)}(x)\in\R^{n_1}$. The coordinates of $y^1$ can again be interpreted as nodes. All these nodes (coordinates) together constitute the new layer
-of the network. Applying $f^{(2)}\circ T^{(2)}$ to $y^1$ yields a new layer $y_2$ and so on. The last layer $y^{(l)}$ is then given by $F_\theta(x)$.
+of an input vector $x\in\R^{n_0}$ can be thought of as a node. Applying $f^{(1)}\circ T^{(1)}$ to $x$ yields a
+new vector $y^1=f^{(1)}\circ T^{(1)}(x)\in\R^{n_1}$. The coordinates of $y^1$ can again be interpreted as nodes. All these nodes (coordinates) together constitute the new layer
+of the network. Applying $f^{(2)}\circ T^{(2)}$ to $y^1$ yields a new layer $y^2$ and so on. The last layer $y^l$ is then given by $F_\theta(x)$.
 Going from layer $i-1$ to the layer $i$ can be visualized as follows: 
 According to the above definitions we have
 \begin{align*}
@@ -182,7 +182,7 @@ Suppose we were given a function $G:\R^n\to\R^m$ from which we only know values 
 i.e. only the values $y_1=G(x_1),\dots,y_D=G(x_D)$ are known.
 Choose $l\in\N$, set $n_0=n$, $n_l=m$ and consider the neural network
 \begin{equation*}
-    F:\R^{n_0n_1}\times\R^{n_0}\times\dots\times\R^{n_{l-1}n_l}\times\R^{n_l}\to C(\R^{n_0},\R^{n_l}), \quad\theta\mapsto F_\theta.
+    F:\R^{n_0n_1}\times\R^{n_1}\times\dots\times\R^{n_{l-1}n_l}\times\R^{n_l}\to C(\R^{n_0},\R^{n_l}), \quad\theta\mapsto F_\theta.
 \end{equation*}
 We can then try to find an \glqq{}optimal\grqq{} $\theta$ such that $F_\theta\approx G$. 
 To do so, we have to introduce a measure for how much $F_\theta$ differs from $G$. 
@@ -193,7 +193,7 @@ This optimization is called \glqq{}training the neural network\grqq{}.
 There is a whole branch of mathematics about these kinds of optimization of problems. 
 A common way to do this is by means of the gradient descent method.
 Roughly speaking, the idea is the following: Calculate the gradient of the map $\theta\mapsto C(F_\theta(x_i),y_i)$ for a fixed $i=1,\dots,D$, 
-and then change $\theta$ slightly in the opposite direction of the gradient. 
+and then change $\theta$ slightly in the opposite direction of the gradient.
 How much $\theta$ is changed, depends on the so-called learning rate $\eta\in\R_+$. 
 As $F_\theta$ is a large composition, computing the gradient basically comes down to repeated application of the chain rule. 
 An efficient algorithm that does exactly this and is widely used is called backpropagation. We can repeat this step until we found a $\theta$ such that 

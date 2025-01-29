@@ -1,31 +1,32 @@
 \label{sec:implPercolation}
-I was asked to experiment with a mixture of the GNN described in the previous section (which layers are MessagePassing layers) and the so called TopKPooling layer.
-How exactly this mixture looks like depends on the specific experiment and will be explained once 
-What follows is a rough overview over the working principles of the TopKPooling layer. 
+For classification of graphs into percolating and non-percolating ones, we were asked to experiment with a mixture of the GNN described in the previous section
+(which layers are message passing layers) and the so called Top-K Pooling layer.
+How exactly this mixture looks like depends on the experiment we did and will be explained once we come the specific experiments.
+What follows is a rough overview over the working principles of the Top-K Pooling layer. 
 For additional information see~\cite{topKPooling}, where this layer was originally proposed.
 The following explanation of the pooling procedure might become more clear with
 an illustration at hand. See figure~\ref{fig:topKPooling}.
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.95\textwidth]{GoalsImplementation/topKpooling}
-    \caption{Illustration of the TopKPooling layer. See section~\ref{sec:implPercolation} for an explanation. Taken from~\cite{topKPooling}.}
+    \caption{Illustration of the Top-K Pooling layer. See section~\ref{sec:implPercolation} for an explanation. Taken from~\cite{topKPooling}.}
     \label{fig:topKPooling}
 \end{figure}
-Suppose $G=(V,E)$ is a graph. Recall from section~\ref{sec:fund_gnns}, 
+Suppose $G=(V,E)$ is an attributed graph. Recall from section~\ref{sec:fund_gnns}, 
 that each node $x\in V$ has a node feature $v_x\in\R^n$. We can organize all node
 features in a matrix $X^l\in\text{Mat}(|V|\times n,\R)$ given by
-\begin{equation*}
+\begin{equation}
     \left(X^l\right)_{x,j}=\left(v_x\right)_j, \quad x\in V, 1\leq j \leq n.
     \label{eq:matNodeFeatures}
-\end{equation*}
+\end{equation}
 Furthermore, we can define the so-called adjacency matrix $A^l\in\text{Mat}(|V|\times |V|,\R)$ to be
-\begin{equation*}
+\begin{equation}
     \left(A^l\right)_{x,y}=\begin{cases}
-        1 \quad \text{if } \{x,y\}\in E,\\
-        0 \quad \text{if } \{x,y\}\notin E
+        1 \quad \text{if } (x,y)\in E,\\
+        0 \quad \text{if } (x,y)\notin E
     \end{cases}, \quad x,y\in V.
     \label{eq:matAdjacency}
-\end{equation*}
+\end{equation}
 For $p\in\R^n$, called the projection vector, we define $y=\frac{X^l p}{\norm{p}}$. 
 Next, choose $k<|N|$ and select the indices of the $k$ highest entries in $y$ and denote the resulting 
 list of indices as $idx\in\N^k$. To each index $i$ in $idx$, there is a corresponding 
@@ -34,15 +35,15 @@ These are the nodes that will not be deleted during the pooling process.
 All nodes in $V\setminus\tilde{V}$ will be deleted. 
 The deletion is done as follows: Define $\tilde{X}\in\text{Mat}(k\times n,\R)$ to be the matrix
 consisting of all node feature $v_x$ for $x\in\tilde{V}$, analogues to equation~\ref{eq:matNodeFeatures}. 
-Furthermore, analogously to equation~\ref{eq:matAdjacency}, define $A^{l+1}\in\text{Mat}(k\times k,\R)$ 
+Likewise, define $A^{l+1}\in\text{Mat}(k\times k,\R)$ analogously to equation~\ref{eq:matAdjacency}
 to be the adjacency matrix corresponding to the nodes in $\tilde{V}$.
 Next, compute the elementwise product of $\tilde{y}$ and $\tilde{X}$ which leads to a new matrix
 $X^{l+1}\in\text{Mat}(k\times n,\R)$. This step is called \glqq{}gate operation\grqq{}.
 The new node feature matrix $X^{l+1}$ together with the new adjacency matrix $A^{l+1}$
 define a new graph $G^{l+1}$ which has $k<|V|$ nodes. Effectively, we have reduced the original graph $G$ with
-$|V|$ nodes to a smaller graph. Depending on the choice of the projection vector $p$ we can
+$|V|$ nodes to a smaller graph. Depending on the choice of the projection vector $p$, we can
 achieve different output graphs $G^{l+1}$. Given a specific problem, the goal of the 
-TopKPooling layer is to learn a suitable projection vector $p$.
+Top-K Pooling layer is to learn a suitable projection vector $p$.
 The gate operation step ensures, that the projection vector is indeed learnable via standard backpropagation.
 The precise argument why the gate operation is necessary for learning $p$ is a bit technical, we refer to~\cite{topKPooling}.
 Again, one do not have to implement this layer from scratch, as the PyG library already provides an implementation, where one 
@@ -53,7 +54,7 @@ for the percolation problem. Instead, the dataset for the percolation problem wa
 colleges. The dataset consists in total of 1614 planar graphs, 822 of which are not percolating, whereas
 the remaining 792 are percolating. See figure~\ref{fig:expPercNonPerc} for examples of graphs that are in the dataset.
 The whole set was again partitioned in a training set ($80\%$ of the total number of graphs)
-and a test set ($20\%$). The nodes have their position in the unit cube as attributes, whereas the edges have their length as attributes.
+and a test set ($20\%$). The nodes have their position in the unit cube as attributes, whereas the edges are attributed with their length.
 \begin{figure}[h]
     \centering
     \begin{subfigure}[t]{0.45\textwidth}

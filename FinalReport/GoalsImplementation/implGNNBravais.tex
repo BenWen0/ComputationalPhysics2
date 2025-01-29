@@ -1,12 +1,12 @@
 \label{sec:implGNNBravais}
 Once we have a sufficient amount of training data at hand, we need to determine the optimal structure of the GNN as well as
-a suitable training procedure. 
+a training procedure, that suits the problem of classifying graphs into Bravais classes. 
 This amounts to finding the right functions $\phi_{upd},\phi_{mes},\phi_{agg}$ (cf. equation~\ref{eq:mess_pass}) 
-and proper number of message passing layers. More than that, one has to decide, which edge-/node-features 
+and a proper number of message passing layers. More than that, one has to decide, which edge/node features 
 do best, as well as which hyperparameters and loss function to use during training.
 
 As we do not have extensive computational resources available, we were unable to vary all of these parameters.
-We fixed the hyperparameters, the loss function as well as the node-/edge features as follows: 
+We fixed the hyperparameters, the loss function as well as the node/edge features as follows: 
 Both in the 2d and in the 3d case the edge ${n,m}$ between nodes $n$ and $m$ 
 carries the difference of the positions of nodes $n$ and $m$ as edge feature $e_{n,m}$.
 The nodes $n$ and $m$ do not carry any specific node feature. Each node got the number 1 assigned as 

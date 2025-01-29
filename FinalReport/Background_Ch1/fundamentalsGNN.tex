@@ -7,9 +7,10 @@ For $y\in V$ we define the neighborhood $N_y$ of $y$ to be the set of all neighb
     \label{eq:def_neighbors}
     N_y\coloneq\left\{x\in V : (x,y)\in E\right\}\subset V.
 \end{equation}
-Furthermore, we assign to each node $x\in V$ a vector $v_x\in\R^n$ called node feature and to each edge $(x, y)\in E$ a vector $e_{x,y}\in\R^m$ called edge feature. 
+Furthermore, we assign to each node $x\in V$ a vector $v_x\in\R^n$ called node feature and to each edge $(x, y)\in E$ a vector $e_{x,y}\in\R^m$ called edge feature.
+A graph together with all its node and edge features is called attributed graph. 
 
-Roughly, a GNN takes a graph with all its nodes and edge features as an input and manipulates these features in each step. 
+Roughly, a GNN takes an attributed graph as an input and manipulates the edge and node features in each step. 
 More than that, a GNN can transform the structure of the graph itself, e.g. by introducing new nodes or edges. 
 However, we will not go into detail about this possibility and stick to the simpler case of manipulating only node and edge-features.
 Furthermore, we restrict ourselves to the case where the GNN does not alter the edge features.
@@ -92,6 +93,6 @@ where $\phi_{upd},\phi_{agg},\phi_{mes}$ denote differentiable functions. These 
 $\phi_{mes}$ takes as inputs the node value $v_c$ and the node value $v_y$ of one neighbor $y$ of $c$ as well as the value $e_{y,c}$ of the edge $(y,c)$. 
 Depending on these inputs, it then computes a value, which can be thought of as a message originating from node $y$ which is sent to node $c$.
 $\phi_{agg}$ collects all these messages to node $c$ and aggregates them in some way, so that the output can be thought of as one overall message to node $c$.
-$\phi_{upd}$ takes this overall message as well as the value of node $c$ and computes, how the value of node $c$ is altered.
-Unsurprisingly, this scheme is called Message-Passing-Layer. Given a specific problem, that is required to be solved by a GNN, the challenge is to make appropriate choices
+$\phi_{upd}$ takes this overall message as well as the value of node $c$ and computes how the value of node $c$ is altered.
+Unsurprisingly, this scheme is called message passing layer. Given a specific problem that is required to be solved by a GNN, the challenge is to make appropriate choices
 for $\phi_{upd},\phi_{agg},\phi_{mes}$ that suit the problem at hand. Furthermore, one has to decide how many iterations of the above procedure are suitable.
