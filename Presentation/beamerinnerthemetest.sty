@@ -1,0 +1,40 @@
+\mode<presentation>
+
+\setbeamertemplate{background}{
+  \begin{tikzpicture}
+  \useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
+  \fill[color=fauBlue] (0,0.8*\the\paperheight) rectangle (\the\paperwidth,0.805*\the\paperheight);
+  \fill[color=fauBlue] (0,0.1*\the\paperheight) rectangle(\the\paperwidth,0.105*\the\paperheight);
+  \ifnum\thepage>1\relax
+   \fill[white,opacity=1] (0,0) rectangle(\the\paperwidth,\the\paperheight);
+   \fi
+  \end{tikzpicture}
+}
+
+% Title page
+\defbeamertemplate*{title page}{test}[1][]
+{
+    \begin{tikzpicture}[remember picture,overlay]
+        \node[xshift=2cm,yshift=-1cm] at (current page.north west) {\includegraphics[scale=0.02]{FAU_NatFak_H_RGB_blue.png}};
+    \end{tikzpicture}
+    \vskip3.4cm
+    \begin{beamercolorbox}{title page header}
+        \centering
+        \usebeamerfont{title}\textbf{\inserttitle}\par  
+        \vspace{0.5cm}
+        \usebeamerfont{subtitle}\insertsubtitle 
+    \end{beamercolorbox}      
+    \vskip2.5cm
+    \begin{beamercolorbox}{author_date}
+        \usebeamerfont{author}\insertauthor
+        \hfill
+        \usebeamerfont{adate}\insertdate
+    \end{beamercolorbox}        
+}
+
+% Items
+%\setbeamertemplate{items}[square]
+\setbeamertemplate{section in toc}[sections numbered]
+\setbeamertemplate{subsection in toc}[subsections numbered]
+
+\mode<all>

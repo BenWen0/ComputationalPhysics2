@@ -1,0 +1,152 @@
+\documentclass{beamer}
+
+\usepackage[english]{babel}
+\usepackage{textcmds}
+\usepackage{amsthm} % for the proof-environment
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage[scr=rsfs]{mathalpha}
+\usepackage{subcaption}
+\usepackage{sidecap}
+\usepackage{wrapfig}
+\usepackage{csquotes}
+\usepackage[backend=biber,style=numeric]{biblatex}
+\addbibresource{references.bib}
+\renewcommand*{\bibfont}{\normalfont\small}
+\usepackage{hyperref} %clickable table of contents
+\hypersetup{
+    colorlinks=false, %set true if you want colored links
+    linktoc=all,     %set to all if you want both sections and subsections linked
+    linkcolor=blue,  %choose some color if you want links to stand out
+}
+\usepackage{tikz}
+\usetikzlibrary{positioning, quotes}
+
+\title{Sructure Recognition with Graph Neural Networks}
+\subtitle{A project for the lab-course \\Advanced Projects in Computational Physics 2 }
+\date{February 05, 2025}
+\author{Benedikt Wenzel}
+
+\usetheme{test}
+\usefonttheme[onlymath]{serif}
+
+\begin{document}
+
+\begin{frame}[plain]
+\hspace*{-0.7cm}
+\begin{minipage}{\textwidth}
+    \titlepage    
+\end{minipage}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Table of contents}
+    \tableofcontents
+\end{frame}
+
+\section{Theoretical Background}
+\subsection{A Few More Words on Message Passing}
+\begin{frame}
+    \frametitle{Theoretical Background - Message Passing}
+    \include{Background/MessagePassing_overview}
+\end{frame}
+\begin{frame}
+    \frametitle{Theoretical Background - Message Passing}
+    \include{Background/MessagePassing_1}
+\end{frame}
+\begin{frame}
+    \frametitle{Theoretical Background - Message Passing}
+    \include{Background/MessagePassing_2}
+\end{frame}
+\begin{frame}
+    \frametitle{Theoretical Background - Message Passing}
+    \include{Background/MessagePassing_3}
+\end{frame}
+\begin{frame}
+    \frametitle{Theoretical Background - Message Passing}
+    \include{Background/MessagePassing_4}
+\end{frame}
+
+\subsection{Percolation}
+\begin{frame}
+    \frametitle{Theoretical Background - Percolation}
+    \include{Background/percolation}
+\end{frame}
+
+\section{Goals}
+\begin{frame}
+    \frametitle{Goals}
+    \input{Goals/goals1.tex}
+\end{frame}
+\begin{frame}
+    \frametitle{Goals}
+    \input{Goals/goals2.tex}
+\end{frame}
+
+\section{Results}
+\subsection{Classification of Bravais Lattices}
+\begin{frame}
+    \frametitle{Results - Bravais Lattices 2D (Experiment 1)}
+    \include{Results/bravais_1}
+\end{frame}
+\begin{frame}
+    \frametitle{Results - Bravais Lattices 2D (Experiment 1)}
+    \include{Results/bravais_2}
+\end{frame}
+\begin{frame}
+    \frametitle{Results - Bravais Lattices 2D (Experiment 1)}
+    \include{Results/bravais_3}
+\end{frame}
+\begin{frame}
+    \frametitle{Results - Bravais Lattices 2D (Experiment 1)}
+    \include{Results/bravais_4}
+\end{frame}
+\begin{frame}
+    \frametitle{Results - Bravais Lattices 3D (Experiment 1)}
+    \include{Results/bravais_5}
+\end{frame}
+\subsection{On the Problem of Percolation}
+\begin{frame}
+    \frametitle{Results - Percolation (Experiment 2)}
+    \include{Results/percolation_1}
+\end{frame}
+\begin{frame}
+    \frametitle{Results - Percolation (Experiment 2)}
+    \include{Results/percolation_2_1}
+\end{frame}
+\begin{frame}
+    \frametitle{Results - Percolation (Experiment 2)}
+    \include{Results/percolation_2_2}
+\end{frame}
+\begin{frame}
+    \frametitle{Results - Percolation (Experiment 2)}
+    \include{Results/percolation_2_3}
+\end{frame}
+\begin{frame}
+    \frametitle{Results - Percolation (Experiment 2)}
+    \include{Results/percolation_2_4}
+\end{frame}
+\begin{frame}
+    \frametitle{Results - Percolation (Experiment 2)}
+    \include{Results/percolation_3}
+\end{frame}
+\begin{frame}
+    \frametitle{Results - Percolation (Experiment 2)}
+    \include{Results/percolation_4}
+\end{frame}
+
+\section{Conclusion and Outlook}
+\begin{frame}
+    \frametitle{Conclusion and Outlook}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Time for Discussion and Questions}
+\end{frame}
+\begin{frame}
+    \frametitle{References}
+    \printbibliography
+\end{frame}
+
+\end{document}

@@ -1,0 +1,72 @@
+\textbf{Overview:}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}[
+        node distance=0.2cm and 0.2cm,
+        node_g/.style={circle, inner sep=0pt, fill=green!70, minimum size=2mm}, 
+        node_r/.style={circle, inner sep=0pt, fill=red, minimum size=2mm},
+        node_o/.style={circle, inner sep=0pt, fill=orange, minimum size=2mm},
+        node/.style={circle, inner sep=0pt, fill=gray, minimum size=2mm},
+        mess/.style={rectangle, fill=green!70, very thick, minimum size=3mm},
+        node_missing/.style={circle, inner sep=0pt, fill=white, minimum size=2mm}
+        ]  
+        %Nodes step 1
+        \node[node_r] (centernode)                          {};
+        \node[node_g] (top)           [above=of centernode]   {};
+        \node[node_o] (bottom)        [below=of centernode]   {};
+        \node[node_g] (right)         [right=of centernode]   {};
+        \node[node_g] (left)          [left=of centernode]    {};
+        \node[node] (llt)           [above left=of left]    {};
+        \node[node] (llb)           [below left=of left]    {};
+        \node[node] (rrt)           [above right=of right]    {};
+        \node[node] (rrb)           [below right=of right]    {};
+        %Lines step 1
+        \draw[-, thick]  (top.south) -- node[anchor=west]{} (centernode.north);
+        \draw[-, thick] (left.east) -- node[anchor=south]{} (centernode.west);
+        \draw[-, thick] (right.west) -- node[anchor=north]{} (centernode.east);
+        \draw[-, thick] (centernode.south) -- (bottom.north);
+        \draw[-, thick, gray] (left.north west) -- (llt.south east);
+        \draw[-, thick, gray] (left.south west) -- (llb.north east);
+        \draw[-, thick, gray] (right.north east) -- (rrt.south west);
+        \draw[-, thick, gray] (right.south east) -- (rrb.north west);
+
+        \node[node_missing] (stop_1) [right=of right] {};
+        \node[node_missing] (start_2) [right=1.5cm of stop_1] {};
+        \draw[->, very thick, black] (stop_1) -- node[anchor=north, black]{$\phi_{mes}$} (start_2);
+        
+        %Nodes step 2
+        \node[mess] (mess_left)          [right=0cm of start_2]    {};
+        \node[node_r] (centernode_2)  [right=of mess_left]     {};
+        \node[mess] (mess_top)           [above=of centernode_2]   {};
+        \node[mess] (mess_right)         [right=of centernode_2]   {};
+         %Lines step 2
+        \draw[->, thick]  (mess_top.south) -- (centernode_2.north);
+        \draw[->, thick] (mess_left.east) -- (centernode_2.west);
+        \draw[->, thick] (mess_right.west) -- (centernode_2.east);
+
+        \node[node_missing] (stop_2) [right=0cm of mess_right] {};
+        \node[node_missing] (start_3) [right=1.5cm of stop_2] {};
+        \draw[->, very thick, black] (stop_2) -- node[anchor=north, black]{$\phi_{agg}$} (start_3);
+
+        %Nodes step 3
+        \node[node_r] (centernode_3)  [right=0cm of start_3]     {};
+        \node[mess] (mess_final)      [above=of centernode_3]   {};
+        %Lines step 3
+        \draw[->, thick]  (mess_final.south) -- (centernode_3.north);
+
+        \node[node_missing] (stop_3) [right=0cm of centernode_3] {};
+        \node[node_missing] (start_4) [right=1.5cm of stop_3] {};
+        \draw[->, very thick, black] (stop_3) -- node[anchor=north, black]{$\phi_{upd}$} (start_4);
+
+        %Nodes step 4
+        \node[node_r] (centernode_4)  [right=0cm of start_4]     {};
+    
+    \end{tikzpicture}
+\end{figure}
+\textbf{Message passing consists of three steps:}
+\begin{enumerate}
+    \item Computing messages ($\phi_{mes}$)
+    \item Aggregating messages ($\phi_{agg}$)
+    \item Updating node values ($\phi_{upd}$)
+\end{enumerate}
+\vfill

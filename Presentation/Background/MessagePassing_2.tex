@@ -1,0 +1,37 @@
+\textbf{Step 2: Aggregate Messages}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}[
+        node distance=0.7cm and 0.7cm,
+        node_r/.style={circle, draw=red!60, fill=red!5, very thick, minimum size=7mm},
+        node_o/.style={circle, draw=orange!60, fill=orange!5, very thick, minimum size=7mm},
+        node_g/.style={circle, draw=gray!60, fill=gray!5, very thick, minimum size=7mm},
+        node/.style={circle, draw=green!60, fill=green!5, very thick, minimum size=7mm},
+        mess/.style={rectangle, draw=green!60, fill=green!5, very thick, minimum size=7mm},
+        node_missing/.style={circle, inner sep=0pt, fill=white, minimum size=2mm}
+        ]
+        %Nodes step 2
+        \node[mess] (mess_left)          []    {$m_z$};
+        \node[node_r] (centernode_2)  [right=of mess_left]     {$v_c$};
+        \node[mess] (mess_top)           [above=of centernode_2]   {$m_x$};
+        \node[mess] (mess_right)         [right=of centernode_2]   {$m_y$};
+        %Lines step 2
+        \draw[->, thick]  (mess_top.south) -- (centernode_2.north);
+        \draw[->, thick] (mess_left.east) -- (centernode_2.west);
+        \draw[->, thick] (mess_right.west) -- (centernode_2.east);
+
+        \node[node_missing] (stop_2) [right=0cm of mess_right] {};
+        \node[node_missing] (start_3) [right=1.5cm of stop_2] {};
+        \draw[->, very thick, black] (stop_2) -- node[anchor=north, black]{$\phi_{agg}$} (start_3);
+
+        %Nodes step 3
+        \node[node_r] (centernode_3)  [right=0cm of start_3]     {$v_c$};
+        \node[mess] (mess_final)      [above=of centernode_3]   {$m_{x+y+z}$};
+        %Lines step 3
+        \draw[->, thick]  (mess_final.south) -- (centernode_3.north);
+    \end{tikzpicture}    
+\end{figure}
+Calculate total message:
+\begin{equation*}
+    m_{x+y+z}\coloneq\phi_{agg}(m_x,m_y,m_z)
+\end{equation*}

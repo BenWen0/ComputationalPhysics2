@@ -1,0 +1,31 @@
+\textbf{Step 3: Update node value}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}[
+        node distance=0.7cm and 0.7cm,
+        node_r/.style={circle, draw=red!60, fill=red!5, very thick, minimum size=7mm},
+        node_o/.style={circle, draw=orange!60, fill=orange!5, very thick, minimum size=7mm},
+        node_g/.style={circle, draw=gray!60, fill=gray!5, very thick, minimum size=7mm},
+        node/.style={circle, draw=green!60, fill=green!5, very thick, minimum size=7mm},
+        mess/.style={rectangle, draw=green!60, fill=green!5, very thick, minimum size=7mm},
+        node_missing/.style={circle, inner sep=0pt, fill=white, minimum size=2mm}
+        ]
+        %Nodes step 3
+        \node[node_r] (centernode_3)  []     {$v_c$};
+        \node[mess] (mess_final)      [above=of centernode_3]   {$m_{x+y+z}$};
+        %Lines step 3
+        \draw[->, thick]  (mess_final.south) -- (centernode_3.north);
+
+        \node[node_missing] (stop_3) [right=0cm of centernode_3] {};
+        \node[node_missing] (start_4) [right=1.5cm of stop_3] {};
+        \draw[->, very thick, black] (stop_3) -- node[anchor=north, black]{$\phi_{upd}$} (start_4);
+
+        %Nodes step 4
+    \node[node_r] (centernode_4)  [right=0cm of start_4]     {$\widehat{v_c}$};
+    \end{tikzpicture}    
+\end{figure}
+Calculate new node value:
+\begin{equation*}
+    \widehat{v_c}\coloneq\phi_{upd}(v_c, m_{x+y+z})
+\end{equation*}
+\textbf{Question:} What exactly are $\phi_{mes},\phi_{agg},\phi_{upd}$?

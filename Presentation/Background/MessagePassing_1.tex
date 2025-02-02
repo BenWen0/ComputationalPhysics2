@@ -1,0 +1,53 @@
+\textbf{Step 1: Compute Messages}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}[
+        node distance=0.7cm and 0.7cm,
+        node_r/.style={circle, draw=red!60, fill=red!5, very thick, minimum size=7mm},
+        node_o/.style={circle, draw=orange!60, fill=orange!5, very thick, minimum size=7mm},
+        node_g/.style={circle, draw=gray!60, fill=gray!5, very thick, minimum size=7mm},
+        node/.style={circle, draw=green!60, fill=green!5, very thick, minimum size=7mm},
+        mess/.style={rectangle, draw=green!60, fill=green!5, very thick, minimum size=7mm},
+        node_missing/.style={circle, inner sep=0pt, fill=white, minimum size=2mm}
+        ]
+        %Nodes step 1
+        \node[node_r] (centernode)                          {$v_c$};
+        \node[node] (top)           [above=of centernode]   {$v_x$};
+        \node[node_o] (bottom)        [below=of centernode]   {};
+        \node[node] (right)         [right=of centernode]   {$v_y$};
+        \node[node] (left)          [left=of centernode]    {$v_z$};
+        \node[node_g] (llt)           [above=of left]    {};
+        \node[node_g] (llb)           [below=of left]    {};
+        \node[node_g] (rrt)           [above=of right]    {};
+        \node[node_g] (rrb)           [below=of right]    {};
+    
+        %Lines step 1
+        \draw[->, thick]  (top.south) -- node[anchor=west]{$e_{x,c}$} (centernode.north);
+        \draw[->, thick] (left.east) -- node[anchor=south]{$e_{z,c}$} (centernode.west);
+        \draw[->, thick] (right.west) -- node[anchor=north]{$e_{y,c}$} (centernode.east);
+        \draw[->, thick] (centernode.south) -- (bottom.north);
+        \draw[->, thick, gray] (left.north) -- (llt.south);
+        \draw[->, thick, gray] (left.south) -- (llb.north);
+        \draw[->, thick, gray] (right.north) -- (rrt.south);
+        \draw[->, thick, gray] (right.south) -- (rrb.north);
+
+        \node[node_missing] (stop_1) [right=0cmof right] {};
+        \node[node_missing] (start_2) [right=1.5cm of stop_1] {};
+        \draw[->, very thick, black] (stop_1) -- node[anchor=north, black]{$\phi_{mes}$} (start_2);
+
+        %Nodes step 2
+        \node[mess] (mess_left)          [right=0cm of start_2]    {$m_z$};
+        \node[node_r] (centernode_2)  [right=of mess_left]     {$v_c$};
+        \node[mess] (mess_top)           [above=of centernode_2]   {$m_x$};
+        \node[mess] (mess_right)         [right=of centernode_2]   {$m_y$};
+        
+        %Lines step 2
+        \draw[->, thick]  (mess_top.south) -- (centernode_2.north);
+        \draw[->, thick] (mess_left.east) -- (centernode_2.west);
+        \draw[->, thick] (mess_right.west) -- (centernode_2.east);
+    \end{tikzpicture}    
+\end{figure}
+For $i\in\{x,y,z\}$ calculate:
+\begin{equation*}
+    m_i\coloneq\phi_{mes}(v_c, v_i, e_{i,c})
+\end{equation*}

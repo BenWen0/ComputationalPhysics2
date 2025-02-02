@@ -1,0 +1,29 @@
+\mode<presentation>
+
+% Frame title
+\defbeamertemplate*{frametitle}{test}[1][]
+{
+    %\begin{beamercolorbox}[wd=1cm,ht=\paperheight]{frametitle}
+    %    
+    %\end{beamercolorbox}
+    \begin{beamercolorbox}[wd=\paperwidth,ht=1.9cm]{frametitle} 
+    \begin{tikzpicture}
+    \useasboundingbox[fill=white](0,0) rectangle(\the\paperwidth,2);
+    %\fill[orange] (0,0) rectangle(2.95,1.2);
+    %\fill[blue!50!cyan!80] (3.05,0) rectangle(\the\paperwidth,1.2);
+    \node[anchor=west, fauBlue,font=\large] at (0,0.7){\textbf{\insertframetitle}};
+    \end{tikzpicture}
+  \end{beamercolorbox}
+}
+
+\defbeamertemplate*{sidebar left}{test}
+{
+  \begin{tikzpicture}
+    \useasboundingbox[fill=white](0,0) rectangle(1.0,\the\paperheight);
+    \fill[fauBlue] (0.93,0) rectangle(1.05,\the\paperheight);
+    \fill[fauBlue] (1.0,0.87*\paperheight-9) -- (1.0, 0.87*\paperheight+9) -- (1.4, 0.87*\paperheight) -- cycle;
+    \node[anchor=center, fauBlue,font=\large] at (0.465,0.5){\thepage};
+  \end{tikzpicture}   
+}
+
+\mode<all>
