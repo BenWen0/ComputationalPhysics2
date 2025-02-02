@@ -1,9 +1,0 @@
-\babel@toc {english}{}\relax 
-\beamer@sectionintoc {1}{Theoretical Background}{3}{0}{1}
-\beamer@subsectionintoc {1}{1}{A Few More Words on Message Passing}{3}{0}{1}
-\beamer@subsectionintoc {1}{2}{Percolation}{8}{0}{1}
-\beamer@sectionintoc {2}{Goals}{9}{0}{2}
-\beamer@sectionintoc {3}{Results}{11}{0}{3}
-\beamer@subsectionintoc {3}{1}{Classification of Bravais Lattices}{11}{0}{3}
-\beamer@subsectionintoc {3}{2}{On the Problem of Percolation}{16}{0}{3}
-\beamer@sectionintoc {4}{Conclusion and Outlook}{23}{0}{4}
