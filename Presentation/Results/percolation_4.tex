@@ -1,2 +1,20 @@
-why we can not expect the layyer to work
-results (both with and without top k)
+\textbf{Why Top K Pooling might not help:} 
+\begin{itemize}
+    \item deletion of nodes/edges
+    \item connected components not preserved
+\end{itemize}
+\textbf{Training results:}
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[t]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Results/percNoPooling.png}
+        \caption{Without Pooling}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Results/percPooling.png}
+        \caption{With Pooling}
+    \end{subfigure}
+\end{figure}

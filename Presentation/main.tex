@@ -22,8 +22,9 @@
 }
 \usepackage{tikz}
 \usetikzlibrary{positioning, quotes}
+\usetikzlibrary{decorations.pathreplacing}
 
-\title{Sructure Recognition with Graph Neural Networks}
+\title{Structure Recognition with Graph Neural Networks}
 \subtitle{A project for the lab-course \\Advanced Projects in Computational Physics 2 }
 \date{February 05, 2025}
 \author{Benedikt Wenzel}
@@ -88,7 +89,11 @@
 \subsection{Classification of Bravais Lattices}
 \begin{frame}
     \frametitle{Results - Bravais Lattices 2D (Experiment 1)}
-    \include{Results/bravais_1}
+    \include{Results/bravais_1_1}
+\end{frame}
+\begin{frame}
+    \frametitle{Results - Bravais Lattices 2D (Experiment 1)}
+    \include{Results/bravais_1_2}
 \end{frame}
 \begin{frame}
     \frametitle{Results - Bravais Lattices 2D (Experiment 1)}
@@ -139,10 +144,12 @@
 \section{Conclusion and Outlook}
 \begin{frame}
     \frametitle{Conclusion and Outlook}
+    \input{conclusion}
 \end{frame}
 
 \begin{frame}
     \frametitle{Time for Discussion and Questions}
+    \input{questions}
 \end{frame}
 \begin{frame}
     \frametitle{References}

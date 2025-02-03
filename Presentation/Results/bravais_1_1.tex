@@ -1,0 +1,147 @@
+\vspace*{-0.7cm}
+\textbf{parameters varied: $w_u,w_,,d_u,d_m$}\par
+$\phi_{mes},\phi_{upd}=$ general feed forward neural network with certain width $w_{m,u}$, depth $d_{m,u}$
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[
+        node distance=0.2cm and 0.7cm,
+        node/.style={circle, draw=gray!60, fill=gray!5, very thick, minimum size=3mm},
+        node_missing/.style={circle, inner sep=0pt, fill=gray, minimum size=1mm},
+        node_invisible/.style={circle, inner sep=0pt, fill=red, minimum size=0mm}
+        ]
+
+        %Nodes input layer
+        \node[node] (1_1) {};
+        \node[node] (1_2) [below=of 1_1] {};
+        \node[node_missing] (m_1_1) [below=of 1_2] {};
+        \node[node_missing] (m_1_2) [below=of m_1_1] {};
+        \node[node_missing] (m_1_3) [below=of m_1_2] {};
+        \node[node] (1_3) [below=of m_1_3] {};
+
+        %Nodes hidden layer 1
+        \node[node] (2_1) [above right=of 1_1] {};
+        \node[node] (2_2) [below=of 2_1] {};
+        \node[node] (2_3) [below=of 2_2] {};
+        \node[node_missing] (m_2_1) [below=of 2_3] {};
+        \node[node_missing] (m_2_2) [below=of m_2_1] {};
+        \node[node_missing] (m_2_3) [below=of m_2_2] {};
+        \node[node] (2_4) [below=of m_2_3] {};
+
+        %Nodes hidden layer 2
+        \node[node] (3_1) [right=of 2_1] {};
+        \node[node] (3_2) [below=of 3_1] {};
+        \node[node] (3_3) [below=of 3_2] {};
+        \node[node_missing] (m_3_1) [below=of 3_3] {};
+        \node[node_missing] (m_3_2) [below=of m_3_1] {};
+        \node[node_missing] (m_3_3) [below=of m_3_2] {};
+        \node[node] (3_4) [below=of m_3_3] {};
+
+        %missing hidden layers
+        \node[node_missing] (m_4_1) [below right=0.5cm and 0.75cm of 3_1] {};
+        \node[node_invisible] (m_4_2) [below=0.5cm of m_4_1] {};
+        \node[node_missing] (m_4_3) [below=0.5cm of m_4_2] {};
+        \node[node_missing] (m_5_1) [right=0.15cm of m_4_1] {};
+        \node[node_invisible] (m_5_2) [below=0.5cm of m_5_1] {};
+        \node[node_missing] (m_5_3) [below=0.5cm of m_5_2] {};
+        \node[node_missing] (m_6_1) [right=0.15cm of m_5_1] {};
+        \node[node_invisible] (m_6_2) [below=0.5cm of m_6_1] {};
+        \node[node_missing] (m_6_3) [below=0.5cm of m_6_2] {};
+        
+        %Nodes hidden layer 3
+        \node[node] (7_1) [above right=0.5cm and 0.75cm of m_6_1] {};
+        \node[node] (7_2) [below=of 7_1] {};
+        \node[node] (7_3) [below=of 7_2] {};
+        \node[node_missing] (m_7_1) [below=of 7_3] {};
+        \node[node_missing] (m_7_2) [below=of m_7_1] {};
+        \node[node_missing] (m_7_3) [below=of m_7_2] {};
+        \node[node] (7_4) [below=of m_7_3] {};
+
+        %Nodes output layer
+        \node[node] (8_1) [below right=of 7_1] {};
+        \node[node] (8_2) [below=of 8_1] {};
+        \node[node_missing] (m_8_1) [below=of 8_2] {};
+        \node[node_missing] (m_8_2) [below=of m_8_1] {};
+        \node[node_missing] (m_8_3) [below=of m_8_2] {};
+        \node[node] (8_3) [below=of m_8_3] {};
+
+        %invisible nodes
+        \node[node_invisible] (inv_1_1) [right=0.385cm of 3_1] {};
+        \node[node_invisible] (inv_1_2) [below right=0.1cm and 0.385cm of 3_1] {};
+        \node[node_invisible] (inv_1_3) [above right=0.1cm and 0.385cm of 3_4] {};
+        \node[node_invisible] (inv_1_4) [right=0.385cm of 3_4] {};
+        \node[node_invisible] (inv_1_5) [right=0.385cm of 3_2] {};
+        \node[node_invisible] (inv_1_6) [right=0.385cm of 3_3] {};
+        \node[node_invisible] (inv_2_1) [left=0.385cm of 7_1] {};
+        \node[node_invisible] (inv_2_2) [below left=0.1cm and 0.385cm of 7_1] {};
+        \node[node_invisible] (inv_2_3) [above left=0.1cm and 0.385cm of 7_4] {};
+        \node[node_invisible] (inv_2_4) [left=0.385cm of 7_4] {};
+        \node[node_invisible] (inv_2_5) [left=0.385cm of 7_2] {};
+        \node[node_invisible] (inv_2_6) [left=0.385cm of 7_3] {};
+        %connections with invisible nodes
+        \draw[dashed, thick, gray]  (3_1) -- (inv_1_1);
+        \draw[dashed, thick, gray]  (3_1) -- (inv_1_2);
+        \draw[dashed, thick, gray]  (3_2) -- (inv_1_5);
+        \draw[dashed, thick, gray]  (3_3) -- (inv_1_6);
+        \draw[dashed, thick, gray]  (3_4) -- (inv_1_3);
+        \draw[dashed, thick, gray]  (3_4) -- (inv_1_4);
+        \draw[dashed, thick, gray]  (7_1) -- (inv_2_1);
+        \draw[dashed, thick, gray]  (7_1) -- (inv_2_2);
+        \draw[dashed, thick, gray]  (7_2) -- (inv_2_5);
+        \draw[dashed, thick, gray]  (7_3) -- (inv_2_6);
+        \draw[dashed, thick, gray]  (7_4) -- (inv_2_3);
+        \draw[dashed, thick, gray]  (7_4) -- (inv_2_4);
+
+        %connections input and first hidden layer
+        \draw[-, thick, gray]  (1_1) -- (2_1);
+        \draw[-, thick, gray]  (1_1) -- (2_2);
+        \draw[-, thick, gray]  (1_1) -- (2_3);
+        \draw[-, thick, gray]  (1_1) -- (2_4);
+        \draw[-, thick, gray]  (1_2) -- (2_1);
+        \draw[-, thick, gray]  (1_2) -- (2_2);
+        \draw[-, thick, gray]  (1_2) -- (2_3);
+        \draw[-, thick, gray]  (1_2) -- (2_4);
+        \draw[-, thick, gray]  (1_3) -- (2_1);
+        \draw[-, thick, gray]  (1_3) -- (2_2);
+        \draw[-, thick, gray]  (1_3) -- (2_3);
+        \draw[-, thick, gray]  (1_3) -- (2_4);
+
+        %connections first and second hidden layer
+        \draw[-, thick, gray]  (2_1) -- (3_1);
+        \draw[-, thick, gray]  (2_1) -- (3_2);
+        \draw[-, thick, gray]  (2_1) -- (3_3);
+        \draw[-, thick, gray]  (2_1) -- (3_4);
+        \draw[-, thick, gray]  (2_2) -- (3_1);
+        \draw[-, thick, gray]  (2_2) -- (3_2);
+        \draw[-, thick, gray]  (2_2) -- (3_3);
+        \draw[-, thick, gray]  (2_2) -- (3_4);
+        \draw[-, thick, gray]  (2_3) -- (3_1);
+        \draw[-, thick, gray]  (2_3) -- (3_2);
+        \draw[-, thick, gray]  (2_3) -- (3_3);
+        \draw[-, thick, gray]  (2_3) -- (3_4);
+        \draw[-, thick, gray]  (2_4) -- (3_1);
+        \draw[-, thick, gray]  (2_4) -- (3_2);
+        \draw[-, thick, gray]  (2_4) -- (3_3);
+        \draw[-, thick, gray]  (2_4) -- (3_4);
+
+        %connections output and last hidden layer
+        \draw[-, thick, gray]  (7_1) -- (8_1);
+        \draw[-, thick, gray]  (7_1) -- (8_2);
+        \draw[-, thick, gray]  (7_1) -- (8_3);
+        \draw[-, thick, gray]  (7_2) -- (8_1);
+        \draw[-, thick, gray]  (7_2) -- (8_2);
+        \draw[-, thick, gray]  (7_2) -- (8_3);
+        \draw[-, thick, gray]  (7_3) -- (8_1);
+        \draw[-, thick, gray]  (7_3) -- (8_2);
+        \draw[-, thick, gray]  (7_3) -- (8_3);
+        \draw[-, thick, gray]  (7_4) -- (8_1);
+        \draw[-, thick, gray]  (7_4) -- (8_2);
+        \draw[-, thick, gray]  (7_4) -- (8_3);
+
+        \draw[decorate, very thick, decoration={brace,amplitude=5pt,mirror,raise=4ex}](2_4.north) -- (7_4.north) node[midway,yshift=-1.1cm]{$d_{m,u}$};
+        \draw[decorate, very thick, decoration={brace,amplitude=5pt,raise=2ex}](3_1.east) -- (3_4.east) node[midway,xshift=1.2cm]{$w_{m,u}$};
+    \end{tikzpicture}
+\end{figure}
+\begin{align*}
+    d_m&\in\{1, 2, 3\}, \quad w_m\in\{10, 20, 30\} ,\\
+    d_u&\in\{1,2\}, \quad w_u\in\{5, 10\}  
+\end{align*}
