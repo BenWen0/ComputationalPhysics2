@@ -1,5 +1,4 @@
 \textbf{Overview:}
-Pfeilrichtungen einfuegen
 \begin{figure}
     \centering
     \begin{tikzpicture}[
@@ -22,10 +21,10 @@ Pfeilrichtungen einfuegen
         \node[node] (rrt)           [above right=of right]    {};
         \node[node] (rrb)           [below right=of right]    {};
         %Lines step 1
-        \draw[-, thick]  (top.south) -- node[anchor=west]{} (centernode.north);
-        \draw[-, thick] (left.east) -- node[anchor=south]{} (centernode.west);
-        \draw[-, thick] (right.west) -- node[anchor=north]{} (centernode.east);
-        \draw[-, thick] (centernode.south) -- (bottom.north);
+        \draw[->, thick]  (top.south) -- node[anchor=west]{} (centernode.north);
+        \draw[->, thick] (left.east) -- node[anchor=south]{} (centernode.west);
+        \draw[->, thick] (right.west) -- node[anchor=north]{} (centernode.east);
+        \draw[->, thick] (centernode.south) -- (bottom.north);
         \draw[-, thick, gray] (left.north west) -- (llt.south east);
         \draw[-, thick, gray] (left.south west) -- (llb.north east);
         \draw[-, thick, gray] (right.north east) -- (rrt.south west);

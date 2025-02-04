@@ -1,0 +1,9 @@
+\textbf{Common example for $\phi_{mes},\phi_{agg},\phi_{upd}$:}\par
+\noindent GIN-Layer \cite{paperGIN} given by:
+\begin{align*}
+    \phi_{mes}(v_c, v_i, e_{i,c})&=v_i \color{red}\to \text{ReLU}(v_i+e_{i,c}) \quad \text{GINE \cite{paperGINEConv}}\\
+    \phi_{agg}(m_1,...,m_n)&=\sum_{i=1}^{n}m_i\\
+    \phi_{upd}(v_c,m_{agg})&=h_\theta\left((1+\epsilon)v_c+m_{agg}\right)
+\end{align*}
+In general, $\phi_{mes},\phi_{agg},\phi_{upd}$ can be (almost) anything\par
+$\implies$ in particular: arbitrary feed forward neural networks
